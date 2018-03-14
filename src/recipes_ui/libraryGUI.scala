@@ -58,6 +58,24 @@ object libraryGUI extends SimpleSwingApplication {
     listenTo(searchBar)
     listenTo(addRecipeButton)
     
+    this.reactions += {
+      case keyEvent: KeyPressed =>
+        if (keyEvent.source == this.searchBar && keyEvent.key == Key.Enter) {
+          val command = this.searchBar.text.trim
+          if (command.nonEmpty) {
+            this.searchBar.text = ""
+            //TODO: make it do something
+          }
+        }
+      case buttonEvent: ButtonClicked =>
+        if (buttonEvent.source == this.pantryButton) {
+          recipeBox.text = pantry.pantryInfo
+        } else if (buttonEvent.source == this.addRecipeButton) {
+          //TODO: make it work
+        }
+        
+    }
+    
     this.pack()
     this.recipeBox.text = pantry.openingMessage
   }

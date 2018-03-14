@@ -4,7 +4,7 @@ import scala.collection.mutable.Map
 
 class Pantry {
   
-  var ingredients = collection.mutable.Map[String, Int]()
+  var ingredients = collection.mutable.Map[String, Int](("Apple", 5))
   
   def addIngredient(input: String, amount: Int) = {
     if (ingredients.contains(input)) {
@@ -26,17 +26,16 @@ class Pantry {
   def pantryInfo: String = {
     val alku = "You have in your pantry:\n\n"
     val nothing = "Abslutely nothing."
-    println(alku)
     var jatko = ""
     if (ingredients.isEmpty) {
       jatko = nothing
     }
     else {
       for (osa <- ingredients) {
-        jatko = jatko + osa._1 + " of " + osa._2
+        jatko = jatko + osa._2 + " of " + osa._1
       }
     }
-    println(jatko).toString
+    return alku + jatko.toString
   }
   
   def openingMessage: String = "Welcome to the recipe library!\nLet's get cooking."
