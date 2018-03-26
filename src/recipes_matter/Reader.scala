@@ -10,7 +10,7 @@ class Reader {
   var mappi = Map[String, String]()
   
   val filename = "recipe_library.txt"
-  val pw = new PrintWriter(new File(filename))
+  val pw = new FileWriter(new File(filename), true)
 //  try {
 //      for (line <- Source.fromFile(filename).getLines) {
 //          println(line)
