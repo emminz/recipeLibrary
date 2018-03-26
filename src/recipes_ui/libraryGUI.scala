@@ -312,20 +312,19 @@ object libraryGUI extends SimpleSwingApplication {
       contents += ingredientRow14
       contents += Swing.VStrut(1)
       contents += ingredientRow15
-      contents += Swing.VStrut(10)
-      contents += Swing.VStrut(5)
+      contents += Swing.VStrut(15)
       contents += addRecBtn
     }
   
     // Layout
     this.contents = new GridBagPanel {
-      layout += recipeBox                -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 5, 5, 5), 0, 0)
-      layout += pantryButton             -> new Constraints(1, 1, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 5), 0, 0)
-      layout += searchBar                -> new Constraints(1, 0, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 5), 0, 0)
-      layout += addRecipeButton          -> new Constraints(1, 2, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 5), 0, 0)
-      layout += randomer                 -> new Constraints(1, 3, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 5), 0, 0)
-      layout += emptySpace               -> new Constraints(1, 4, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(0, 0, 0, 5), 0, 0)
-      layout += addRecView               -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 10, 0, 10), 0, 0)
+      layout += recipeBox                -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 10, 5, 10), 0, 0)
+      layout += pantryButton             -> new Constraints(1, 1, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
+      layout += searchBar                -> new Constraints(1, 0, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
+      layout += addRecipeButton          -> new Constraints(1, 2, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
+      layout += randomer                 -> new Constraints(1, 3, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
+      layout += emptySpace               -> new Constraints(1, 4, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(0, 0, 0, 10), 0, 0)
+      layout += addRecView               -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 10, 5, 10), 0, 0)
       }
     
     // Listen & react
@@ -333,8 +332,8 @@ object libraryGUI extends SimpleSwingApplication {
     listenTo(searchBar)
     listenTo(addRecipeButton)
     listenTo(addRecBtn)
-    listenTo(recMeth)
-    listenTo(recName)
+    listenTo(recMeth.keys)
+    listenTo(recName.keys)
     listenTo(ingName)
     listenTo(ingName2)
     listenTo(ingName3)
@@ -392,7 +391,7 @@ object libraryGUI extends SimpleSwingApplication {
         }
       case buttonEvent: ButtonClicked =>
         if (buttonEvent.source == this.pantryButton) {
-          recipeBox.text = pantry.pantryInfo
+          updateUI("pantry")
         } else if (buttonEvent.source == this.addRecipeButton) {
           updateUI("addingRecipe")
           //TODO: make it work
@@ -400,10 +399,14 @@ object libraryGUI extends SimpleSwingApplication {
           //TODO: give random recipe
         } else if (buttonEvent.source == this.addRecBtn) {
           println("Adding recipe")
-          reader.recipeAdder("\nbanana")
+          if (recName.text != "" && recMeth.text != "") {
+            if (reader.checkSmartInput(recName.text.toString) && reader.checkSmartInput(recMeth.text.toString)) {
+              reader.recipeAdder(recName.text.trim.toString + "#" + recMeth.text.trim.toString)
+            } else emptySpace.text = "Let's not use\nany special characters."
+          } else emptySpace.text = "Your recipe needs\na name and a method."
         }
+      }
         
-    }
     
     // Setting up the initial state
     addRecView.visible = false
@@ -412,7 +415,13 @@ object libraryGUI extends SimpleSwingApplication {
       if (input == "addingRecipe") {
         recipeBox.visible = false
         addRecView.visible = true     
-      } 
+        emptySpace.text = ""
+      } else if (input == "pantry") {
+        recipeBox.visible = true
+        addRecView.visible = false
+        recipeBox.text = pantry.pantryInfo
+        emptySpace.text = ""
+      }
     }
     
     this.recipeBox.text = pantry.openingMessage

@@ -19,19 +19,28 @@ class Reader {
 //      case e: FileNotFoundException => println("Couldn't find that file.")
 //      case e: IOException => println("Got an IOException!")
 //  }
+ 
   
-  
-  // TODO: make it not throw error when adding twice
+  //TODO: sanitize input
   def recipeAdder(input: String) = {
     println(input)
+    val split = input.split('#')
+    val name = split(0)
+    val method = split(1)
     try {
       val pw = new FileWriter(new File(filename), true)
-      pw.write(input)
+      pw.write('#' + name + '\n')
+      pw.write('[' + method + ']' + '\n')
       pw.flush()
       pw.close()
+      "success"
     } catch {
       case e: FileNotFoundException => println("Recipe library file is missing.")
       case e: IOException => println("Got an IOException!")
-    }
+    } 
+  } 
+  
+  def checkSmartInput(input: String) = {
+    !input.contains('#') && !input.contains('[') && !input.contains(']') && !input.contains('%')
   }
 }
