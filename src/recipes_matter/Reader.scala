@@ -20,16 +20,18 @@ class Reader {
 //      case e: IOException => println("Got an IOException!")
 //  }
   
+  
+  // TODO: make it not throw error when adding twice
   def recipeAdder(input: String) = {
     println(input)
     try {
+      val pw = new FileWriter(new File(filename), true)
       pw.write(input)
+      pw.flush()
+      pw.close()
     } catch {
       case e: FileNotFoundException => println("Recipe library file is missing.")
       case e: IOException => println("Got an IOException!")
-    } finally {
-      pw.close()
     }
-
   }
 }
