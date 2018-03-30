@@ -23,17 +23,18 @@ class Reader {
   
   //TODO: sanitize input
   def recipeAdder(input: String) = {
-    println(input)
     val split = input.split('#')
     val name = split(0)
     val method = split(1)
+    val ingString = split(2)
     try {
       val pw = new FileWriter(new File(filename), true)
       pw.write('#' + name + '\n')
       pw.write('[' + method + ']' + '\n')
+      pw.write('%' + ingString + '%' + '\n' + '\n')
       pw.flush()
       pw.close()
-      "success"
+      println("success")
     } catch {
       case e: FileNotFoundException => println("Recipe library file is missing.")
       case e: IOException => println("Got an IOException!")
@@ -41,6 +42,8 @@ class Reader {
   } 
   
   def checkSmartInput(input: String) = {
-    !input.contains('#') && !input.contains('[') && !input.contains(']') && !input.contains('%')
+    !input.contains('#') && !input.contains('[') && !input.contains(']') && 
+    !input.contains('%') && !input.contains('§') && !input.contains('¤') && 
+    !input.contains('^') && !input.contains('¨')
   }
 }
