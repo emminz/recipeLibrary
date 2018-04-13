@@ -384,18 +384,18 @@ object libraryGUI extends SimpleSwingApplication {
                 var problemFound = false
                 var missingFound = false
                 var ingredientString = ""
-                for (field <- fieldList) { // Let's check the input first
-                  if (!reader.checkSmartInput(field.text.toString)) {
+                for (field <- fieldList) {
+                  if (!reader.checkSmartInput(field.text.toString)) { // Checking whether the field contains special chars
                     problemFound = true
                     emptySpace.text = "Let's not use\nany special characters."
                   }
                   else {
                     if (!problemFound) {
-                      if (field.name.charAt(3) == 'A') {
+                      if (field.name.charAt(3) == 'A') { // For every Amount field, see if name and allergen are also filled out
                         val friendName = fieldList(fieldList.indexOf(field)+1).text
                         val friendAller = fieldList(fieldList.indexOf(field)+2).text
                         if (field.text != "") {
-                          if (friendName == "") {
+                          if (friendName == "") { // If Amount field is empty, name field needs to be empty too
                             missingFound = true
                           }
                           else {

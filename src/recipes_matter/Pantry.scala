@@ -24,7 +24,7 @@ class Pantry {
   }
   
   def pantryInfo: String = {
-    val alku = "You have in your pantry:\n\n"
+    val alku = "You have in your pantry:\n"
     val nothing = "Abslutely nothing."
     var jatko = ""
     if (ingredients.isEmpty) {
@@ -37,6 +37,14 @@ class Pantry {
     }
     return alku + jatko.toString
   }
+//  
+//  def converter(name: String, amnt: Int, letter: String) = {
+//    if (name == "sugar") {
+//      
+//      if (letter.toLowerCase == "dl") 
+//      else if (letter.toLowerCase == "l") "850 g"
+//    } elsee
+//  }
   
   def openingMessage: String = "Welcome to the recipe library!\nLet's get cooking."
   
