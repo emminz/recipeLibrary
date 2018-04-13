@@ -8,6 +8,7 @@ import javax.swing.UIManager
 import java.awt.Font
 import scala.swing.Font
 import recipes_matter._
+import scala.collection.immutable.List
 
 object libraryGUI extends SimpleSwingApplication {
   
@@ -46,64 +47,64 @@ object libraryGUI extends SimpleSwingApplication {
     val addRecBtn = new Button("Done, save!") 
 //    val addIngBtn = new Button("Add another ingredient") 
     
-    val ingName = new TextField(20)
-    val ingName2 = new TextField(20) 
-    val ingName3 = new TextField(20) 
-    val ingName4 = new TextField(20) 
-    val ingName5 = new TextField(20) 
-    val ingName6 = new TextField(20) 
-    val ingName7 = new TextField(20) 
-    val ingName8 = new TextField(20) 
-    val ingName9 = new TextField(20) 
-    val ingName10 = new TextField(20) 
-    val ingName11 = new TextField(20) 
-    val ingName12 = new TextField(20) 
-    val ingName13 = new TextField(20) 
-    val ingName14 = new TextField(20)
-    val ingName15 = new TextField(20) 
+    val ingName = new TextField(20) {  { name = "ingName" } }
+    val ingName2 = new TextField(20)  { name = "ingName" }
+    val ingName3 = new TextField(20)  { name = "ingName" }
+    val ingName4 = new TextField(20)  { name = "ingName" }
+    val ingName5 = new TextField(20)  { name = "ingName" }
+    val ingName6 = new TextField(20)  { name = "ingName" }
+    val ingName7 = new TextField(20)  { name = "ingName" }
+    val ingName8 = new TextField(20)  { name = "ingName" }
+    val ingName9 = new TextField(20)  { name = "ingName" }
+    val ingName10 = new TextField(20)  { name = "ingName" }
+    val ingName11 = new TextField(20)  { name = "ingName" }
+    val ingName12 = new TextField(20)  { name = "ingName" }
+    val ingName13 = new TextField(20)  { name = "ingName" }
+    val ingName14 = new TextField(20)  { name = "ingName" }
+    val ingName15 = new TextField(20)  { name = "ingName" }
     
-    val ingAmnt = new TextField(20)
-    val ingAmnt2 = new TextField(20)
-    val ingAmnt3 = new TextField(20)
-    val ingAmnt4 = new TextField(20)
-    val ingAmnt5 = new TextField(20)
-    val ingAmnt6 = new TextField(20)
-    val ingAmnt7 = new TextField(20)
-    val ingAmnt8 = new TextField(20)
-    val ingAmnt9 = new TextField(20)
-    val ingAmnt10 = new TextField(20)
-    val ingAmnt11 = new TextField(20)
-    val ingAmnt12 = new TextField(20)
-    val ingAmnt13 = new TextField(20)
-    val ingAmnt14 = new TextField(20)
-    val ingAmnt15 = new TextField(20)
+    val ingAmnt = new TextField(20)  { name = "ingAmnt" }
+    val ingAmnt2 = new TextField(20)  { name = "ingAmnt" }
+    val ingAmnt3 = new TextField(20)  { name = "ingAmnt" }
+    val ingAmnt4 = new TextField(20)  { name = "ingAmnt" }
+    val ingAmnt5 = new TextField(20)  { name = "ingAmnt" }
+    val ingAmnt6 = new TextField(20)  { name = "ingAmnt" }
+    val ingAmnt7 = new TextField(20)  { name = "ingAmnt" }
+    val ingAmnt8 = new TextField(20)  { name = "ingAmnt" }
+    val ingAmnt9 = new TextField(20)  { name = "ingAmnt" }
+    val ingAmnt10 = new TextField(20)  { name = "ingAmnt" }
+    val ingAmnt11 = new TextField(20)  { name = "ingAmnt" }
+    val ingAmnt12 = new TextField(20)  { name = "ingAmnt" }
+    val ingAmnt13 = new TextField(20)  { name = "ingAmnt" }
+    val ingAmnt14 = new TextField(20)  { name = "ingAmnt" }
+    val ingAmnt15 = new TextField(20)  { name = "ingAmnt" }
     
     val recName = new TextField(30)
     
-    val aller = new TextField(30)
-    val aller2 = new TextField(30)
-    val aller3 = new TextField(30)
-    val aller4 = new TextField(30)
-    val aller5 = new TextField(30)
-    val aller6 = new TextField(30)
-    val aller7 = new TextField(30)
-    val aller8 = new TextField(30)
-    val aller9 = new TextField(30)
-    val aller10 = new TextField(30)
-    val aller11 = new TextField(30)
-    val aller12 = new TextField(30)
-    val aller13 = new TextField(30)
-    val aller14 = new TextField(30)
-    val aller15 = new TextField(30)    
+    val aller = new TextField(30)  { name = "aller" }
+    val aller2 = new TextField(30)  { name = "aller" }
+    val aller3 = new TextField(30)  { name = "aller" }
+    val aller4 = new TextField(30)  { name = "aller" }
+    val aller5 = new TextField(30)  { name = "aller" }
+    val aller6 = new TextField(30)  { name = "aller" }
+    val aller7 = new TextField(30)  { name = "aller" }
+    val aller8 = new TextField(30)  { name = "aller" }
+    val aller9 = new TextField(30)  { name = "aller" }
+    val aller10 = new TextField(30)  { name = "aller" }
+    val aller11 = new TextField(30)  { name = "aller" }
+    val aller12 = new TextField(30)  { name = "aller" }
+    val aller13 = new TextField(30)  { name = "aller" }
+    val aller14 = new TextField(30)  { name = "aller" }
+    val aller15 = new TextField(30)  { name = "aller" }
     
     val recMeth = new TextArea(5, 30)
     
     val ingredientRow = new BoxPanel(Orientation.Horizontal) {
-      contents += ingName
+      contents += ingAmnt
       contents += Swing.HStrut(5)
       contents += new Label("of")
       contents += Swing.HStrut(5)
-      contents += ingAmnt
+      contents += ingName
       contents += Swing.HStrut(5)
       contents += new Label("Contains allergen:")
       contents += Swing.HStrut(5)
@@ -111,11 +112,11 @@ object libraryGUI extends SimpleSwingApplication {
     }
     
     val ingredientRow2 = new BoxPanel(Orientation.Horizontal) {
-      contents += ingName2
+      contents += ingAmnt2
       contents += Swing.HStrut(5)
       contents += new Label("of")
       contents += Swing.HStrut(5)
-      contents += ingAmnt2
+      contents += ingName2
       contents += Swing.HStrut(5)
       contents += new Label("Contains allergen:")
       contents += Swing.HStrut(5)
@@ -123,11 +124,11 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow3 = new BoxPanel(Orientation.Horizontal) {
-      contents += ingName3
+      contents += ingAmnt3
       contents += Swing.HStrut(5)
       contents += new Label("of")
       contents += Swing.HStrut(5)
-      contents += ingAmnt3
+      contents += ingName3
       contents += Swing.HStrut(5)
       contents += new Label("Contains allergen:")
       contents += Swing.HStrut(5)
@@ -135,11 +136,11 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow4 = new BoxPanel(Orientation.Horizontal) {
-      contents += ingName4
+      contents += ingAmnt4
       contents += Swing.HStrut(5)
       contents += new Label("of")
       contents += Swing.HStrut(5)
-      contents += ingAmnt4
+      contents += ingName4
       contents += Swing.HStrut(5)
       contents += new Label("Contains allergen:")
       contents += Swing.HStrut(5)
@@ -147,11 +148,11 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow5 = new BoxPanel(Orientation.Horizontal) {
-      contents += ingName5
+      contents += ingAmnt5
       contents += Swing.HStrut(5)
       contents += new Label("of")
       contents += Swing.HStrut(5)
-      contents += ingAmnt5
+      contents += ingName5
       contents += Swing.HStrut(5)
       contents += new Label("Contains allergen:")
       contents += Swing.HStrut(5)
@@ -159,11 +160,11 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow6 = new BoxPanel(Orientation.Horizontal) {
-      contents += ingName6
+      contents += ingAmnt6
       contents += Swing.HStrut(5)
       contents += new Label("of")
       contents += Swing.HStrut(5)
-      contents += ingAmnt6
+      contents += ingName6
       contents += Swing.HStrut(5)
       contents += new Label("Contains allergen:")
       contents += Swing.HStrut(5)
@@ -171,11 +172,11 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow7 = new BoxPanel(Orientation.Horizontal) {
-      contents += ingName7
+      contents += ingAmnt7
       contents += Swing.HStrut(5)
       contents += new Label("of")
       contents += Swing.HStrut(5)
-      contents += ingAmnt7
+      contents += ingName7
       contents += Swing.HStrut(5)
       contents += new Label("Contains allergen:")
       contents += Swing.HStrut(5)
@@ -183,11 +184,11 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow8 = new BoxPanel(Orientation.Horizontal) {
-      contents += ingName8
+      contents += ingAmnt8
       contents += Swing.HStrut(5)
       contents += new Label("of")
       contents += Swing.HStrut(5)
-      contents += ingAmnt8
+      contents += ingName8
       contents += Swing.HStrut(5)
       contents += new Label("Contains allergen:")
       contents += Swing.HStrut(5)
@@ -195,11 +196,11 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow9 = new BoxPanel(Orientation.Horizontal) {
-      contents += ingName9
+      contents += ingAmnt9
       contents += Swing.HStrut(5)
       contents += new Label("of")
       contents += Swing.HStrut(5)
-      contents += ingAmnt9
+      contents += ingName9
       contents += Swing.HStrut(5)
       contents += new Label("Contains allergen:")
       contents += Swing.HStrut(5)
@@ -207,11 +208,11 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow10 = new BoxPanel(Orientation.Horizontal) {
-      contents += ingName10
+      contents += ingAmnt10
       contents += Swing.HStrut(5)
       contents += new Label("of")
       contents += Swing.HStrut(5)
-      contents += ingAmnt10
+      contents += ingName10
       contents += Swing.HStrut(5)
       contents += new Label("Contains allergen:")
       contents += Swing.HStrut(5)
@@ -219,11 +220,11 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow11 = new BoxPanel(Orientation.Horizontal) {
-      contents += ingName11
+      contents += ingAmnt11
       contents += Swing.HStrut(5)
       contents += new Label("of")
       contents += Swing.HStrut(5)
-      contents += ingAmnt11
+      contents += ingName11
       contents += Swing.HStrut(5)
       contents += new Label("Contains allergen:")
       contents += Swing.HStrut(5)
@@ -231,11 +232,11 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow12 = new BoxPanel(Orientation.Horizontal) {
-      contents += ingName12
+      contents += ingAmnt12
       contents += Swing.HStrut(5)
       contents += new Label("of")
       contents += Swing.HStrut(5)
-      contents += ingAmnt12
+      contents += ingName12
       contents += Swing.HStrut(5)
       contents += new Label("Contains allergen:")
       contents += Swing.HStrut(5)
@@ -243,11 +244,11 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow13 = new BoxPanel(Orientation.Horizontal) {
-      contents += ingName13
+      contents += ingAmnt13
       contents += Swing.HStrut(5)
       contents += new Label("of")
       contents += Swing.HStrut(5)
-      contents += ingAmnt13
+      contents += ingName13
       contents += Swing.HStrut(5)
       contents += new Label("Contains allergen:")
       contents += Swing.HStrut(5)
@@ -255,11 +256,11 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow14 = new BoxPanel(Orientation.Horizontal) {
-      contents += ingName14
+      contents += ingAmnt14
       contents += Swing.HStrut(5)
       contents += new Label("of")
       contents += Swing.HStrut(5)
-      contents += ingAmnt14
+      contents += ingName14
       contents += Swing.HStrut(5)
       contents += new Label("Contains allergen:")
       contents += Swing.HStrut(5)
@@ -267,16 +268,35 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow15 = new BoxPanel(Orientation.Horizontal) {
-      contents += ingName15
+      contents += ingAmnt15
       contents += Swing.HStrut(5)
       contents += new Label("of")
       contents += Swing.HStrut(5)
-      contents += ingAmnt15
+      contents += ingName15
       contents += Swing.HStrut(5)
       contents += new Label("Contains allergen:")
       contents += Swing.HStrut(5)
       contents += aller15
     }
+    
+    // Let's add all the fields to a List for easier checking later on
+    val fieldList = List(
+        ingAmnt, ingName, aller,
+        ingAmnt2, ingName2, aller2,
+        ingAmnt3, ingName3, aller3,
+        ingAmnt4, ingName4, aller4,
+        ingAmnt5, ingName5, aller5,
+        ingAmnt6, ingName6, aller6,
+        ingAmnt7, ingName7, aller7,
+        ingAmnt8, ingName8, aller8,
+        ingAmnt9, ingName9, aller9,
+        ingAmnt10, ingName10, aller10,
+        ingAmnt11, ingName11, aller11,
+        ingAmnt12, ingName12, aller12,
+        ingAmnt13, ingName13, aller13,
+        ingAmnt14, ingName14, aller14,
+        ingAmnt15, ingName15, aller15
+        )
     
     var addRecView = new BoxPanel(Orientation.Vertical) {
       contents += recName
@@ -312,20 +332,19 @@ object libraryGUI extends SimpleSwingApplication {
       contents += ingredientRow14
       contents += Swing.VStrut(1)
       contents += ingredientRow15
-      contents += Swing.VStrut(10)
-      contents += Swing.VStrut(5)
+      contents += Swing.VStrut(15)
       contents += addRecBtn
     }
   
     // Layout
     this.contents = new GridBagPanel {
-      layout += recipeBox                -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 5, 5, 5), 0, 0)
-      layout += pantryButton             -> new Constraints(1, 1, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 5), 0, 0)
-      layout += searchBar                -> new Constraints(1, 0, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 5), 0, 0)
-      layout += addRecipeButton          -> new Constraints(1, 2, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 5), 0, 0)
-      layout += randomer                 -> new Constraints(1, 3, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 5), 0, 0)
-      layout += emptySpace               -> new Constraints(1, 4, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(0, 0, 0, 5), 0, 0)
-      layout += addRecView               -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 10, 0, 10), 0, 0)
+      layout += recipeBox                -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 10, 5, 10), 0, 0)
+      layout += pantryButton             -> new Constraints(1, 1, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
+      layout += searchBar                -> new Constraints(1, 0, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
+      layout += addRecipeButton          -> new Constraints(1, 2, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
+      layout += randomer                 -> new Constraints(1, 3, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
+      layout += emptySpace               -> new Constraints(1, 4, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(0, 0, 0, 10), 0, 0)
+      layout += addRecView               -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 10, 5, 10), 0, 0)
       }
     
     // Listen & react
@@ -333,6 +352,11 @@ object libraryGUI extends SimpleSwingApplication {
     listenTo(searchBar)
     listenTo(addRecipeButton)
     listenTo(addRecBtn)
+    listenTo(recMeth.keys)
+    listenTo(recName.keys)
+    for (field <- fieldList) {
+      listenTo(field)
+    }
     
     this.reactions += {
       case keyEvent: KeyPressed =>
@@ -345,7 +369,7 @@ object libraryGUI extends SimpleSwingApplication {
         }
       case buttonEvent: ButtonClicked =>
         if (buttonEvent.source == this.pantryButton) {
-          recipeBox.text = pantry.pantryInfo
+          updateUI("pantry")
         } else if (buttonEvent.source == this.addRecipeButton) {
           updateUI("addingRecipe")
           //TODO: make it work
@@ -353,10 +377,47 @@ object libraryGUI extends SimpleSwingApplication {
           //TODO: give random recipe
         } else if (buttonEvent.source == this.addRecBtn) {
           println("Adding recipe")
-          reader.recipeAdder("banana")
+          if (recName.text != "" && recMeth.text != "") {
+            if (ingName.text == "" || ingAmnt.text == "") emptySpace.text = "Let's fill the ingredients.\nFrom the top, please."
+            else {
+              if (reader.checkSmartInput(recName.text.toString) && reader.checkSmartInput(recMeth.text.toString)) {
+                var problemFound = false
+                var missingFound = false
+                var ingredientString = ""
+                for (field <- fieldList) {
+                  if (!reader.checkSmartInput(field.text.toString)) { // Checking whether the field contains special chars
+                    problemFound = true
+                    emptySpace.text = "Let's not use\nany special characters."
+                  }
+                  else {
+                    if (!problemFound) {
+                      if (field.name.charAt(3) == 'A') { // For every Amount field, see if name and allergen are also filled out
+                        val friendName = fieldList(fieldList.indexOf(field)+1).text
+                        val friendAller = fieldList(fieldList.indexOf(field)+2).text
+                        if (field.text != "") {
+                          if (friendName == "") { // If Amount field is empty, name field needs to be empty too
+                            missingFound = true
+                          }
+                          else {
+                            ingredientString = ingredientString + field.text.trim.toString + " § " + friendName.trim.toString
+                            if (friendAller != "") ingredientString = ingredientString + " § " + friendAller.trim.toString + " ¤ "
+                            else ingredientString = ingredientString + " ¤ "
+                          }
+                        } else {
+                          if (friendName != "" && friendAller != "") missingFound = true
+                        } // close emptiness else
+                      } // close 4th letter checking if
+                    } else emptySpace.text = "Let's not use\nany special characters."
+                  }
+                }
+                if (!missingFound && !problemFound) reader.recipeAdder(recName.text.trim.toString + "#" + recMeth.text.trim.toString + "#" + ingredientString)
+                else emptySpace.text = "Some ingredient info\nis missing! Please fix."
+              } else emptySpace.text = "Let's not use\nany special characters."
+            }
+          } else emptySpace.text = "Your recipe needs\na name and a method."
         }
+      }
         
-    }
     
     // Setting up the initial state
     addRecView.visible = false
@@ -365,7 +426,13 @@ object libraryGUI extends SimpleSwingApplication {
       if (input == "addingRecipe") {
         recipeBox.visible = false
         addRecView.visible = true     
-      } 
+        emptySpace.text = ""
+      } else if (input == "pantry") {
+        recipeBox.visible = true
+        addRecView.visible = false
+        recipeBox.text = pantry.pantryInfo
+        emptySpace.text = ""
+      }
     }
     
     this.recipeBox.text = pantry.openingMessage
