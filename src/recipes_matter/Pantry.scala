@@ -37,15 +37,20 @@ class Pantry {
     }
     return alku + jatko.toString
   }
-//  
-//  def converter(name: String, amnt: Int, letter: String) = {
-//    if (name == "sugar") {
-//      
-//      if (letter.toLowerCase == "dl") 
-//      else if (letter.toLowerCase == "l") "850 g"
-//    } elsee
-//  }
   
+  def convertToG(amount: String, name: String) = {
+    var amnt = amount.split(" ")
+    if (name == "sugar") {
+      if (amnt(1) == "dl") {
+        amnt(0) = amnt(0) * 85
+      } else if (amnt(1) != "g") "Please measure sugar in grams or desiliters"
+    } else if (name == "flour") {
+      if (amnt(1) == "dl") {
+        amnt(0) = amnt(0) * 65
+      } else if (amnt(1) != "g") "Please measure flour in grams or desiliters"
+    } //close flour else if
+  }
+
   def openingMessage: String = "Welcome to the recipe library!\nLet's get cooking."
   
 }
