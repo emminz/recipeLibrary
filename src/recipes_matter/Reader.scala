@@ -5,9 +5,8 @@ import java.io.IOException
 import scala.io.Source
 import java.io.PrintWriter
 import java.io._
-import recipes_matter.Pantry
 
-class Reader {
+object Reader {
   var mappi = Map[String, String]()
   
   val recipeFile = "recipe_library.txt"
@@ -63,6 +62,27 @@ class Reader {
       }
     }
   }
+  
+  // The function below informs Pantry what the text file knows
+  def updatePantry = {
+    try {
+      val file = Source.fromFile(pantryFile)
+      for (line <- file.getLines) {
+        if (line.head == '#') {
+          val parts = line.split('-')
+          val name = parts(1).drop(1).trim
+          val amount = parts(0).split('&')(0).trim
+          val allergen = parts(0).split('&')(1).trim
+          Pantry.ingredients.update(name, amount)
+        }
+      }
+      file.close()
+    } catch {
+      case e: FileNotFoundException => println("Couldn't find that file.")
+      case e: IOException => println("Got an IOException!")
+    }
+  }
+  
   
   def checkSmartInput(input: String) = {
     !input.contains('#') && !input.contains('[') && !input.contains(']') && 

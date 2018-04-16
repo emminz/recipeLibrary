@@ -1,32 +1,32 @@
 package recipes_matter
 
 import scala.collection.mutable.Map
-import recipes_matter.Reader
 
-class Pantry {
+object Pantry {
   
-  var ingredients = collection.mutable.Map[String, Int](("Apple", 5))
+  var ingredients = collection.mutable.Map[String, String](("Apple", "5"))
   
-  def addIngredient(input: String, amount: Int) = {
-    if (ingredients.contains(input)) {
-      changeAmount(input, amount, "add")
-      println("The ingredient exists. Amount added to existing ingredient.")
-    } else ingredients(input) = amount
-  }
-  
-  def changeAmount(ingredient: String, amount: Int, way: String) = {
-    if (this.ingredients.contains(ingredient)) {
-      if (way == "reduce") {
-        if (ingredients(ingredient) - amount > 0) ingredients(ingredient) = ingredients(ingredient) - amount
-        else ingredients(ingredient) = 0
-      }
-      else ingredients(ingredient) = ingredients(ingredient) + amount
-    }
-  }
-  
+//  def addIngredient(input: String, amount: Int) = {
+//    if (ingredients.contains(input)) {
+//      changeAmount(input, amount, "add")
+//      println("The ingredient exists. Amount added to existing ingredient.")
+//    } else ingredients(input) = amount
+//  }
+//  
+//  def changeAmount(ingredient: String, amount: Int, way: String) = {
+//    if (this.ingredients.contains(ingredient)) {
+//      if (way == "reduce") {
+//        if (ingredients(ingredient) - amount > 0) ingredients(ingredient) = ingredients(ingredient) - amount
+//        else ingredients(ingredient) = 0
+//      }
+//      else ingredients(ingredient) = ingredients(ingredient) + amount
+//    }
+//  }
+
   def pantryInfo: String = {
+    Reader.updatePantry
     val alku = "You have in your pantry:\n"
-    val nothing = "Abslutely nothing."
+    val nothing = "Absolutely nothing."
     var jatko = ""
     if (ingredients.isEmpty) {
       jatko = nothing
