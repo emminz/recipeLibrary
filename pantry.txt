@@ -1,0 +1,9 @@
+Known ingredients:
+& marks allergen
+
+# water - 999 dl
+# milk - 10 dl &milk
+# flour - 2000 g &gluten
+# lemon - 3 &citrus
+# sugar - 1000 g
+# yeast - 50 g

@@ -1,6 +1,7 @@
 package recipes_matter
 
 import scala.collection.mutable.Map
+import recipes_matter.Reader
 
 class Pantry {
   
@@ -38,16 +39,30 @@ class Pantry {
     return alku + jatko.toString
   }
   
-  def convertToG(amount: String, name: String) = {
+  def checkConvert(amount: String, name: String) = {
+    if (name == "sugar" || name == "flour") converter(amount, name)
+  }
+  
+  def converter(amount: String, name: String) = {
     var amnt = amount.split(" ")
+    var nro = amnt(0).toInt
+    var dlkg = amnt(1).toString
     if (name == "sugar") {
-      if (amnt(1) == "dl") {
-        amnt(0) = amnt(0) * 85
-      } else if (amnt(1) != "g") "Please measure sugar in grams or desiliters"
+      if (dlkg == "dl") {
+        nro = nro * 85
+        dlkg = "g"
+      } else if (dlkg == "g")  {
+        nro = nro / 85
+        dlkg = "dl"
+      } else "Please measure sugar in grams or desiliters"
     } else if (name == "flour") {
       if (amnt(1) == "dl") {
-        amnt(0) = amnt(0) * 65
-      } else if (amnt(1) != "g") "Please measure flour in grams or desiliters"
+        nro = nro * 65
+        dlkg = "g"
+      } else if (amnt(1) == "g") {
+        nro = nro / 65
+        dlkg = "dl"
+      } else "Please measure flour in grams or desiliters"
     } //close flour else if
   }
 
