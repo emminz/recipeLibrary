@@ -4,9 +4,9 @@ import scala.collection.mutable.Map
 
 object Pantry {
   
-  var ingredients = collection.mutable.Map[String, String](("Apple", "5"))
+  var ingredients = collection.mutable.Map[String, String]()
   
-  val convertables = collection.mutable.Map[String, Int](("sugar", 85), ("flour", 65), ("olive oil", 90))
+  val convertables = collection.mutable.Map[String, String](("sugar", "85"), ("flour", "65"), ("olive oil", "90"))
   
 //  def addIngredient(input: String, amount: Int) = {
 //    if (ingredients.contains(input)) {
@@ -45,23 +45,24 @@ object Pantry {
   def converter(amount: String, name: String): Array[String] = {
     var nro = 0
     var dlkg = ""
+    println("converter amount is" + amount)
     if (amount.contains(" ")) {
       var amnt = amount.split(" ")
       nro = amnt(0).toInt
-      dlkg = amount(1).toString
+      dlkg = amnt(1).toString
     } else if (amount.trim >= "0" && amount.trim <= "99999"){
       nro = amount.trim.toInt
     }
-    if (convertables.contains(name)) {
+    if (convertables.contains(name.toLowerCase)) {
       if (dlkg == "dl") {
-        nro = nro * convertables(name)
+        nro = nro.toInt * convertables(name.toLowerCase).toInt
         dlkg = "g"
       } else if (dlkg == "g") {
-        nro = nro / convertables(name)
+        nro = nro.toInt / convertables(name.toLowerCase).toInt
         dlkg = "dl"
       }
     }
-    Array(nro.toString, dlkg.toString, name)
+    Array(nro.toString, dlkg.toString, name.toLowerCase)
   }
 
   def openingMessage: String = "Welcome to the recipe library!\nLet's get cooking."
