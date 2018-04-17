@@ -46,9 +46,7 @@ object Reader {
     val split = input.trim.dropRight(1)split('¤')
     for (osa <- split) {
       val individuals = osa.split('§')
-      println(individuals(0) + "indiv")
       var amount = "0"
-      println("split indiv" + individuals(0).split(' ')(1))
       if (individuals(0).contains(' ')) {
         amount += " " + individuals(0).split(' ')(1)
       }
@@ -61,9 +59,7 @@ object Reader {
         updatePantry
         if (!Pantry.ingredients.contains(name)) {
           val pw = new FileWriter(new File(pantryFile), true)
-          println("Reader sends: " + amount + " and name " + name)
           val stuff = Pantry.converter(amount, name)
-          println("this is the stuff " + stuff(0) + stuff(1))
           amount = stuff(0) + " " + stuff(1) 
           pw.write("\n" + "# " + name + " - " + amount)
           if (allergen != "") pw.write("&" + allergen)

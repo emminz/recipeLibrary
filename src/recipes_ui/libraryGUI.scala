@@ -369,7 +369,6 @@ object libraryGUI extends SimpleSwingApplication {
           updateUI("pantry")
         } else if (buttonEvent.source == this.addRecipeButton) {
           updateUI("addingRecipe")
-          //TODO: make it work
         } else if (buttonEvent.source == this.randomer) {
           //TODO: give random recipe
         } else if (buttonEvent.source == this.addRecBtn) {
