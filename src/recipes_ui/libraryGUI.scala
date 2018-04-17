@@ -19,9 +19,6 @@ object libraryGUI extends SimpleSwingApplication {
     size = new Dimension(300, 300)
     centerOnScreen
     
-    val pantry = new Pantry
-    val reader = new Reader
-    
     val recipeBox = new TextArea(28, 66) {
       editable = false
       wordWrap = true
@@ -372,7 +369,6 @@ object libraryGUI extends SimpleSwingApplication {
           updateUI("pantry")
         } else if (buttonEvent.source == this.addRecipeButton) {
           updateUI("addingRecipe")
-          //TODO: make it work
         } else if (buttonEvent.source == this.randomer) {
           //TODO: give random recipe
         } else if (buttonEvent.source == this.addRecBtn) {
@@ -380,12 +376,13 @@ object libraryGUI extends SimpleSwingApplication {
           if (recName.text != "" && recMeth.text != "") {
             if (ingName.text == "" || ingAmnt.text == "") emptySpace.text = "Let's fill the ingredients.\nFrom the top, please."
             else {
-              if (reader.checkSmartInput(recName.text.toString) && reader.checkSmartInput(recMeth.text.toString)) {
+              if (Reader.checkSmartInput(recName.text.toString) && Reader.checkSmartInput(recMeth.text.toString)) {
                 var problemFound = false
                 var missingFound = false
                 var ingredientString = ""
+                var pantryString = ""
                 for (field <- fieldList) {
-                  if (!reader.checkSmartInput(field.text.toString)) { // Checking whether the field contains special chars
+                  if (!Reader.checkSmartInput(field.text.trim.toString)) { // Checking whether the field contains special chars
                     problemFound = true
                     emptySpace.text = "Let's not use\nany special characters."
                   }
@@ -400,8 +397,15 @@ object libraryGUI extends SimpleSwingApplication {
                           }
                           else {
                             ingredientString = ingredientString + field.text.trim.toString + " § " + friendName.trim.toString
-                            if (friendAller != "") ingredientString = ingredientString + " § " + friendAller.trim.toString + " ¤ "
-                            else ingredientString = ingredientString + " ¤ "
+                            pantryString = pantryString + field.text.trim.toString + " § " + friendName.trim.toString
+                            if (friendAller != "") {
+                              ingredientString = ingredientString + " ¤ "
+                              pantryString = pantryString + " § " + friendAller.trim.toString + " ¤ "
+                            }
+                            else {
+                              ingredientString = ingredientString + " ¤ "
+                              pantryString = pantryString + " ¤ "
+                            }
                           }
                         } else {
                           if (friendName != "" && friendAller != "") missingFound = true
@@ -410,7 +414,10 @@ object libraryGUI extends SimpleSwingApplication {
                     } else emptySpace.text = "Let's not use\nany special characters."
                   }
                 }
-                if (!missingFound && !problemFound) reader.recipeAdder(recName.text.trim.toString + "#" + recMeth.text.trim.toString + "#" + ingredientString)
+                if (!missingFound && !problemFound) {
+                  Reader.recipeAdder(recName.text.trim.toString + "#" + recMeth.text.trim.toString + "#" + ingredientString) //No problems, so all info sent to be added to the recipe library
+                  Reader.ingredientAdder(pantryString) //We can also add all the ingredient to the pantry since the recipe is acceptable
+                }
                 else emptySpace.text = "Some ingredient info\nis missing! Please fix."
               } else emptySpace.text = "Let's not use\nany special characters."
             }
@@ -421,6 +428,7 @@ object libraryGUI extends SimpleSwingApplication {
     
     // Setting up the initial state
     addRecView.visible = false
+    Reader.updatePantry
     
     def updateUI(input: String) = {
       if (input == "addingRecipe") {
@@ -430,11 +438,11 @@ object libraryGUI extends SimpleSwingApplication {
       } else if (input == "pantry") {
         recipeBox.visible = true
         addRecView.visible = false
-        recipeBox.text = pantry.pantryInfo
+        recipeBox.text = Pantry.pantryInfo
         emptySpace.text = ""
       }
     }
     
-    this.recipeBox.text = pantry.openingMessage
+    this.recipeBox.text = Pantry.openingMessage
   }
 }

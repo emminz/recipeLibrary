@@ -2,50 +2,69 @@ package recipes_matter
 
 import scala.collection.mutable.Map
 
-class Pantry {
+object Pantry {
   
-  var ingredients = collection.mutable.Map[String, Int](("Apple", 5))
+  var ingredients = collection.mutable.Map[String, String]()
   
-  def addIngredient(input: String, amount: Int) = {
-    if (ingredients.contains(input)) {
-      changeAmount(input, amount, "add")
-      println("The ingredient exists. Amount added to existing ingredient.")
-    } else ingredients(input) = amount
-  }
+  val convertables = collection.mutable.Map[String, String](("sugar", "85"), ("flour", "65"), ("olive oil", "90"))
   
-  def changeAmount(ingredient: String, amount: Int, way: String) = {
-    if (this.ingredients.contains(ingredient)) {
-      if (way == "reduce") {
-        if (ingredients(ingredient) - amount > 0) ingredients(ingredient) = ingredients(ingredient) - amount
-        else ingredients(ingredient) = 0
-      }
-      else ingredients(ingredient) = ingredients(ingredient) + amount
-    }
-  }
-  
+//  def addIngredient(input: String, amount: Int) = {
+//    if (ingredients.contains(input)) {
+//      changeAmount(input, amount, "add")
+//      println("The ingredient exists. Amount added to existing ingredient.")
+//    } else ingredients(input) = amount
+//  }
+//  
+//  def changeAmount(ingredient: String, amount: Int, way: String) = {
+//    if (this.ingredients.contains(ingredient)) {
+//      if (way == "reduce") {
+//        if (ingredients(ingredient) - amount > 0) ingredients(ingredient) = ingredients(ingredient) - amount
+//        else ingredients(ingredient) = 0
+//      }
+//      else ingredients(ingredient) = ingredients(ingredient) + amount
+//    }
+//  }
+
   def pantryInfo: String = {
-    val alku = "You have in your pantry:\n"
-    val nothing = "Abslutely nothing."
+    Reader.updatePantry
+    val alku = "You have in your pantry:\n\n"
+    val nothing = "Absolutely nothing."
     var jatko = ""
     if (ingredients.isEmpty) {
       jatko = nothing
     }
     else {
       for (osa <- ingredients) {
-        jatko = jatko + osa._2 + " of " + osa._1
+        jatko = jatko + osa._2 + " of " + osa._1 + "\n"
       }
     }
     return alku + jatko.toString
   }
-//  
-//  def converter(name: String, amnt: Int, letter: String) = {
-//    if (name == "sugar") {
-//      
-//      if (letter.toLowerCase == "dl") 
-//      else if (letter.toLowerCase == "l") "850 g"
-//    } elsee
-//  }
   
+  // Converts the amounts, returns an Array like ("5", "dl", "sugar")
+  def converter(amount: String, name: String): Array[String] = {
+    var nro = 0
+    var dlkg = ""
+    println("converter amount is" + amount)
+    if (amount.contains(" ")) {
+      var amnt = amount.split(" ")
+      nro = amnt(0).toInt
+      dlkg = amnt(1).toString
+    } else if (amount.trim >= "0" && amount.trim <= "99999"){
+      nro = amount.trim.toInt
+    }
+    if (convertables.contains(name.toLowerCase)) {
+      if (dlkg == "dl") {
+        nro = nro.toInt * convertables(name.toLowerCase).toInt
+        dlkg = "g"
+      } else if (dlkg == "g") {
+        nro = nro.toInt / convertables(name.toLowerCase).toInt
+        dlkg = "dl"
+      }
+    }
+    Array(nro.toString, dlkg.toString, name.toLowerCase)
+  }
+
   def openingMessage: String = "Welcome to the recipe library!\nLet's get cooking."
   
 }
