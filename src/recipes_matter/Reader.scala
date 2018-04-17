@@ -30,9 +30,9 @@ object Reader {
     val ingString = split(2)
     try {
       val rw = new FileWriter(new File(recipeFile), true)
-      rw.write('#' + name + '\n')
+      rw.write('\n' + "-----" + '#' + name + '\n')
       rw.write('[' + method + ']' + '\n')
-      rw.write('%' + ingString + '%' + '\n' + '\n')
+      rw.write('%' + ingString + '%')
       rw.flush()
       rw.close()
       println("success")
@@ -90,7 +90,6 @@ object Reader {
           Pantry.ingredients.update(name, amount)
         }
       }
-      println(Pantry.ingredients)
       file.close()
     } catch {
       case e: FileNotFoundException => println("Couldn't find that file.")
@@ -98,8 +97,39 @@ object Reader {
     }
   }
   
-  def updatePantryFile(name: String, amount: String) = {
-    
+  // The following method goes through the recipe library and seeks out all recipes that fulfill the search criteria.
+  // Returns a Map like ("Banana split" -> ("Take a banana, do something with it", "1 § banana ¤ 100 g § icecream ¤")
+  def readRecipes(like: String, avoid: String) = {
+    try {
+      val file = Source.fromFile(recipeFile)
+      var suitables = collection.mutable.Map[String, Array[String]]()
+      var name = ""
+      var method = ""
+      var ingredients = ""
+      for (line <- file.getLines) {
+        if (line.head == '#') name = line.drop(1)
+        else if (line.head == '[') method = line.drop(1)
+        else if (line.head == '%') {
+          ingredients = line.drop(1)
+          if (like != "") { // If like is defined, then the recipe is added only if it is looked for. If like is not filled, all recipes will do
+            if (ingredients.contains(like)) suitables += (name -> Array(method, ingredients))
+          } else {
+            suitables += (name -> Array(method, ingredients))
+          }
+        } // Now all the suitable recipes are in a Map ready to be dropped in the next stage
+      } 
+      if (avoid != "") { // If the ingredients contain an ingredient or allergen that should be avoided, the recipe will be dropped
+        for (osa <- suitables) {
+          if (osa._2.contains(avoid)) {
+            suitables -= osa._1
+          }
+        }
+      }
+      suitables
+    } catch {
+      case e: FileNotFoundException => println("Couldn't find that file.")
+      case e: IOException => println("Got an IOException!")
+    }
   }
   
   def checkSmartInput(input: String) = {
