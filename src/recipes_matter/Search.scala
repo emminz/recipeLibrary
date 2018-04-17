@@ -10,8 +10,20 @@ object Search {
     var like = ""
     if (input.contains(',')) {
       val split = input.trim.split(',')
-      
+      if (split(0).head == '!') {
+        avoid = split(0).drop(1)
+        like = split(1)
+      }
+      else if (split(1).head == '!') {
+        avoid = split(1).drop(1)
+        like = split(0)
+      }
+    } else {
+      if (input.head == '!') avoid = input.drop(1)
+      else like = input
     }
+    println("I see that you like " + like + " and hate " + avoid)
+    Reader.readRecipes(like, avoid)
   }
   
   // Checks if there's only one like and one dislike, returns true

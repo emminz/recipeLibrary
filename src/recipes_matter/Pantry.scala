@@ -27,7 +27,7 @@ object Pantry {
 
   def pantryInfo: String = {
     Reader.updatePantry
-    val alku = "You have in your pantry:\n"
+    val alku = "You have in your pantry:\n\n"
     val nothing = "Absolutely nothing."
     var jatko = ""
     if (ingredients.isEmpty) {
@@ -35,7 +35,7 @@ object Pantry {
     }
     else {
       for (osa <- ingredients) {
-        jatko = jatko + osa._2 + " of " + osa._1
+        jatko = jatko + osa._2 + " of " + osa._1 + "\n"
       }
     }
     return alku + jatko.toString

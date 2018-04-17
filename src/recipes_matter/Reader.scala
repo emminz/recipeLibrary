@@ -30,9 +30,9 @@ object Reader {
     val ingString = split(2)
     try {
       val rw = new FileWriter(new File(recipeFile), true)
-      rw.write('#' + name + '\n')
+      rw.write('\n' + "-----" + '#' + name + '\n')
       rw.write('[' + method + ']' + '\n')
-      rw.write('%' + ingString + '%' + '\n' + '\n')
+      rw.write('%' + ingString + '%')
       rw.flush()
       rw.close()
       println("success")

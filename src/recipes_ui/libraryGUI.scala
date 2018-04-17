@@ -346,7 +346,7 @@ object libraryGUI extends SimpleSwingApplication {
     
     // Listen & react
     listenTo(pantryButton)
-    listenTo(searchBar)
+    listenTo(searchBar.keys)
     listenTo(addRecipeButton)
     listenTo(addRecBtn)
     listenTo(recMeth.keys)
@@ -360,8 +360,11 @@ object libraryGUI extends SimpleSwingApplication {
         if (keyEvent.source == this.searchBar && keyEvent.key == Key.Enter) {
           val command = this.searchBar.text.trim
           if (command.nonEmpty) {
-            this.searchBar.text = ""
-            //TODO: make it do something
+            if (!Reader.checkSmartInput(command)) emptySpace.text = "Please don't search with\nspecial characters."
+            else if (!Search.checkInput(command)) emptySpace.text = "You can use one good\nand one bad word\nin the search.\nNo more than that, please."
+            else {
+              Search.dealWithInput(command)
+            }
           }
         }
       case buttonEvent: ButtonClicked =>
