@@ -47,8 +47,9 @@ object Reader {
     for (osa <- split) {
       val individuals = osa.split('§')
       var amount = "0"
-      if (individuals(0).contains(' ')) {
-        amount += " " + individuals(0).split(' ')(1)
+      println("first indiv " + individuals(0))
+      if (individuals(0).trim.contains(' ')) {
+        amount += " " + individuals(0).trim.split(' ')(1)
       }
       val name = individuals(1).trim
       var allergen = ""

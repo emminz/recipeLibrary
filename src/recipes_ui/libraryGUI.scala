@@ -399,7 +399,7 @@ object libraryGUI extends SimpleSwingApplication {
                             ingredientString = ingredientString + field.text.trim.toString + " § " + friendName.trim.toString
                             pantryString = pantryString + field.text.trim.toString + " § " + friendName.trim.toString
                             if (friendAller != "") {
-                              ingredientString = ingredientString + " § "
+                              ingredientString = ingredientString + " ¤ "
                               pantryString = pantryString + " § " + friendAller.trim.toString + " ¤ "
                             }
                             else {
