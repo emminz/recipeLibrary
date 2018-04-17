@@ -52,17 +52,19 @@ object Reader {
       }
       val name = individuals(1).trim
       var allergen = ""
+      println("individuals" + individuals.mkString + " and length " + individuals.length)
       if (individuals.length == 3) {
         allergen = individuals(2).trim
       }
       try {
+        println("allergen" + allergen)
         updatePantry
         if (!Pantry.ingredients.contains(name)) {
           val pw = new FileWriter(new File(pantryFile), true)
           val stuff = Pantry.converter(amount, name)
           amount = stuff(0) + " " + stuff(1) 
           pw.write("\n" + "# " + name + " - " + amount)
-          if (allergen != "") pw.write("&" + allergen)
+          if (allergen != "") pw.write(" &" + allergen)
           else pw.write(" &§")
           pw.flush()
           pw.close()
