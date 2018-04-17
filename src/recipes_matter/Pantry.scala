@@ -6,7 +6,7 @@ object Pantry {
   
   var ingredients = collection.mutable.Map[String, String](("Apple", "5"))
   
-  val convertables = collection.mutable.Map[String, Int](("sugar", 85), ("flour", 65))
+  val convertables = collection.mutable.Map[String, Int](("sugar", 85), ("flour", 65), ("olive oil", 90))
   
 //  def addIngredient(input: String, amount: Int) = {
 //    if (ingredients.contains(input)) {
@@ -43,9 +43,15 @@ object Pantry {
   
   // Converts the amounts, returns an Array like ("5", "dl", "sugar")
   def converter(amount: String, name: String): Array[String] = {
-    var amnt = amount.split(" ")
-    var nro = amnt(0).toInt
-    var dlkg = amnt(1).toString
+    var nro = 0
+    var dlkg = ""
+    if (amount.contains(" ")) {
+      var amnt = amount.split(" ")
+      nro = amnt(0).toInt
+      dlkg = amount(1).toString
+    } else if (amount.trim >= "0" && amount.trim <= "99999"){
+      nro = amount.trim.toInt
+    }
     if (convertables.contains(name)) {
       if (dlkg == "dl") {
         nro = nro * convertables(name)
@@ -55,7 +61,7 @@ object Pantry {
         dlkg = "dl"
       }
     }
-    Array(nro.toString, amnt.toString, name)
+    Array(nro.toString, dlkg.toString, name)
   }
 
   def openingMessage: String = "Welcome to the recipe library!\nLet's get cooking."

@@ -43,18 +43,25 @@ object Reader {
   } 
   
   def ingredientAdder(input: String) = {
-    val split = input.trim.split('¤')
+    val split = input.trim.dropRight(1)split('¤')
     for (osa <- split) {
       val individuals = osa.split('§')
-      val amount = individuals(0)
-      val name = individuals(1)
-      val allergen = Option(individuals(2))
+      var amount = "0"
+      val name = individuals(1).trim
+      var allergen = ""
+      println(osa)
+      if (individuals.length == 3) {
+        allergen = individuals(2).trim
+      }
       try {
         updatePantry
         if (!Pantry.ingredients.contains(name)) {
           val pw = new FileWriter(new File(pantryFile), true)
-          pw.write('#' + name + " - " + amount)
-          if (allergen.isDefined) pw.write("&" + allergen)
+          println("Reader sends: " + amount + " and name " + name)
+          amount = Pantry.converter(amount, name)(0) + " " + Pantry.converter(amount, name)(1) 
+          pw.write("\n" + "# " + name + " - " + amount)
+          if (allergen != "") pw.write("&" + allergen)
+          else pw.write("&§")
           pw.flush()
           pw.close()
         }
@@ -72,12 +79,14 @@ object Reader {
       for (line <- file.getLines) {
         if (line.head == '#') {
           val parts = line.split('-')
-          val name = parts(1).drop(1).trim
-          val amount = parts(0).split('&')(0).trim
-          val allergen = parts(0).split('&')(1).trim
+          val name = parts(0).drop(1).trim
+          val amount = parts(1).split('&')(0).trim
+          println(line)
+          //val allergen = parts(0).split('&')(1).trim
           Pantry.ingredients.update(name, amount)
         }
       }
+      println(Pantry.ingredients)
       file.close()
     } catch {
       case e: FileNotFoundException => println("Couldn't find that file.")

@@ -381,8 +381,9 @@ object libraryGUI extends SimpleSwingApplication {
                 var problemFound = false
                 var missingFound = false
                 var ingredientString = ""
+                var pantryString = ""
                 for (field <- fieldList) {
-                  if (!Reader.checkSmartInput(field.text.toString)) { // Checking whether the field contains special chars
+                  if (!Reader.checkSmartInput(field.text.trim.toString)) { // Checking whether the field contains special chars
                     problemFound = true
                     emptySpace.text = "Let's not use\nany special characters."
                   }
@@ -396,9 +397,16 @@ object libraryGUI extends SimpleSwingApplication {
                             missingFound = true
                           }
                           else {
-                            ingredientString = ingredientString + field.text.trim.toString + "§" + friendName.trim.toString
-                            if (friendAller != "") ingredientString = ingredientString + "§" + friendAller.trim.toString + "¤"
-                            else ingredientString = ingredientString + "¤"
+                            ingredientString = ingredientString + field.text.trim.toString + " § " + friendName.trim.toString
+                            pantryString = pantryString + field.text.trim.toString + " § " + friendName.trim.toString
+                            if (friendAller != "") {
+                              ingredientString = ingredientString + " § "
+                              pantryString = pantryString + " § " + friendAller.trim.toString + " ¤ "
+                            }
+                            else {
+                              ingredientString = ingredientString + " ¤ "
+                              pantryString = pantryString + " ¤ "
+                            }
                           }
                         } else {
                           if (friendName != "" && friendAller != "") missingFound = true
@@ -421,6 +429,7 @@ object libraryGUI extends SimpleSwingApplication {
     
     // Setting up the initial state
     addRecView.visible = false
+    Reader.updatePantry
     
     def updateUI(input: String) = {
       if (input == "addingRecipe") {
