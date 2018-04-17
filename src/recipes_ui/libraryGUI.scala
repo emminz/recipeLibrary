@@ -402,7 +402,7 @@ object libraryGUI extends SimpleSwingApplication {
                             ingredientString = ingredientString + field.text.trim.toString + " § " + friendName.trim.toString
                             pantryString = pantryString + field.text.trim.toString + " § " + friendName.trim.toString
                             if (friendAller != "") {
-                              ingredientString = ingredientString + " § "
+                              ingredientString = ingredientString + " ¤ "
                               pantryString = pantryString + " § " + friendAller.trim.toString + " ¤ "
                             }
                             else {
@@ -419,7 +419,7 @@ object libraryGUI extends SimpleSwingApplication {
                 }
                 if (!missingFound && !problemFound) {
                   Reader.recipeAdder(recName.text.trim.toString + "#" + recMeth.text.trim.toString + "#" + ingredientString) //No problems, so all info sent to be added to the recipe library
-                  Reader.ingredientAdder(ingredientString) //We can also add all the ingredient to the pantry since the recipe is acceptable
+                  Reader.ingredientAdder(pantryString) //We can also add all the ingredient to the pantry since the recipe is acceptable
                 }
                 else emptySpace.text = "Some ingredient info\nis missing! Please fix."
               } else emptySpace.text = "Let's not use\nany special characters."

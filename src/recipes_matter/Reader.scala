@@ -47,22 +47,25 @@ object Reader {
     for (osa <- split) {
       val individuals = osa.split('§')
       var amount = "0"
-      if (individuals(0).contains(' ')) {
-        amount += " " + individuals(0).split(' ')(1)
+      println("first indiv " + individuals(0))
+      if (individuals(0).trim.contains(' ')) {
+        amount += " " + individuals(0).trim.split(' ')(1)
       }
       val name = individuals(1).trim
       var allergen = ""
+      println("individuals" + individuals.mkString + " and length " + individuals.length)
       if (individuals.length == 3) {
         allergen = individuals(2).trim
       }
       try {
+        println("allergen" + allergen)
         updatePantry
         if (!Pantry.ingredients.contains(name)) {
           val pw = new FileWriter(new File(pantryFile), true)
           val stuff = Pantry.converter(amount, name)
           amount = stuff(0) + " " + stuff(1) 
           pw.write("\n" + "# " + name + " - " + amount)
-          if (allergen != "") pw.write("&" + allergen)
+          if (allergen != "") pw.write(" &" + allergen)
           else pw.write(" &§")
           pw.flush()
           pw.close()
