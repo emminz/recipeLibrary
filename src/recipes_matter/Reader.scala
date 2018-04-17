@@ -50,12 +50,14 @@ object Reader {
       val name = individuals(1)
       val allergen = Option(individuals(2))
       try {
-        val pw = new FileWriter(new File(pantryFile), true)
-        pw.write('#' + name + " - " + amount)
-        if (allergen.isDefined) pw.write("&" + allergen)
-        pw.flush()
-        pw.close()
-        println("ingredients added!")
+        updatePantry
+        if (!Pantry.ingredients.contains(name)) {
+          val pw = new FileWriter(new File(pantryFile), true)
+          pw.write('#' + name + " - " + amount)
+          if (allergen.isDefined) pw.write("&" + allergen)
+          pw.flush()
+          pw.close()
+        }
       } catch {
         case e: FileNotFoundException => println("Pantry file is missing.")
         case e: IOException => println("Got an IOException!")
@@ -63,7 +65,7 @@ object Reader {
     }
   }
   
-  // The function below informs Pantry what the text file knows
+  // The function below informs Pantry what the text file knows so that the info can be accessed easily
   def updatePantry = {
     try {
       val file = Source.fromFile(pantryFile)
@@ -83,6 +85,9 @@ object Reader {
     }
   }
   
+  def updatePantryFile(name: String, amount: String) = {
+    
+  }
   
   def checkSmartInput(input: String) = {
     !input.contains('#') && !input.contains('[') && !input.contains(']') && 
