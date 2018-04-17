@@ -45,7 +45,6 @@ object Pantry {
   def converter(amount: String, name: String): Array[String] = {
     var nro = 0
     var dlkg = ""
-    println("converter amount is" + amount)
     if (amount.contains(" ")) {
       var amnt = amount.split(" ")
       nro = amnt(0).toInt

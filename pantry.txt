@@ -6,3 +6,4 @@ Known ingredients:
 # lemon - 3 &citrus
 # sugar - 1000 g &§
 # yeast - 50 g &§
+# brown sugar - 0 g &§

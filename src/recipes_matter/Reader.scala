@@ -30,12 +30,11 @@ object Reader {
     val ingString = split(2)
     try {
       val rw = new FileWriter(new File(recipeFile), true)
-      rw.write('\n' + "-----" + '#' + name + '\n')
-      rw.write('[' + method + ']' + '\n')
-      rw.write('%' + ingString + '%')
+      rw.write('\n' + "-----" + '\n' + '#' + name + '\n')
+      rw.write('[' + method + '\n')
+      rw.write('%' + ingString)
       rw.flush()
       rw.close()
-      println("success")
     } catch {
       case e: FileNotFoundException => println("Recipe library file is missing.")
       case e: IOException => println("Got an IOException!")
@@ -47,18 +46,15 @@ object Reader {
     for (osa <- split) {
       val individuals = osa.split('§')
       var amount = "0"
-      println("first indiv " + individuals(0))
       if (individuals(0).trim.contains(' ')) {
         amount += " " + individuals(0).trim.split(' ')(1)
       }
       val name = individuals(1).trim
       var allergen = ""
-      println("individuals" + individuals.mkString + " and length " + individuals.length)
       if (individuals.length == 3) {
         allergen = individuals(2).trim
       }
       try {
-        println("allergen" + allergen)
         updatePantry
         if (!Pantry.ingredients.contains(name)) {
           val pw = new FileWriter(new File(pantryFile), true)
