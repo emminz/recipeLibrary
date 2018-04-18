@@ -94,19 +94,22 @@ object Reader {
   }
   
   def checkAmount(amount: String, name: String): Boolean = {
+    val nimi = name.toLowerCase.trim
     Reader.updatePantry
     var amnt = 0.0
     var compare = 0.0
-    if (Pantry.ingredients.contains(name)) {
+    println(Pantry.ingredients.toString)
+    if (Pantry.ingredients.contains(nimi)) {
       if (amount.trim.contains(' ')) {
         amnt = amount.split(' ')(0).trim.toDouble
       } else amnt = amount.trim.toDouble
-      if (Pantry.ingredients(name).trim.contains(' ')) {
-        compare = Pantry.ingredients(name).split(' ')(0).trim.toDouble
-      } else compare = Pantry.ingredients(name).trim.toDouble
-      if (amnt >= compare) true
-    }
-    false
+      if (Pantry.ingredients(nimi).trim.contains(' ')) {
+        compare = Pantry.ingredients(nimi).split(' ')(0).trim.toDouble
+      } else compare = Pantry.ingredients(nimi).trim.toDouble
+      println("amnout: " + amnt)
+      println("compare: " + compare)
+      amnt <= compare
+    } else false
   }
   
   // The following method goes through the recipe library and seeks out all recipes that fulfill the search criteria.
@@ -120,18 +123,19 @@ object Reader {
       var method = ""
       var ingredients = ""
       for (line <- file.getLines) {
-        if (line.head == '#') name = line.drop(1)
-        else if (line.head == '[') method = line.drop(1)
+        if (line.head == '#') name = line.drop(1).trim
+        else if (line.head == '[') method = line.drop(1).trim
         else if (line.head == '%') {
-          ingredients = line.drop(1)
+          ingredients = line.drop(1).trim
           if (like != "") { // If like is defined, then the recipe is added only if it is looked for. If like is not filled, all recipes will do
             if (ingredients.contains(like)) {
-              val ing = ingredients.trim.dropRight(1).split('¤')
+              val ing = ingredients.trim.split('¤')
               for (osa <- ing) {
                 val palat = osa.trim.split('§')
+                println("pala1: " + palat(0).trim + "pala2: " + palat(1).trim)
                 if (!checkAmount(palat(0).trim, palat(1).trim)) missing += 1
               }
-              if (Search.N <= missing) suitables += (name -> Array(method, ingredients))
+              if (Search.N >= missing) suitables += (name -> Array(method, ingredients)); println(missing)
             }
           } else {
             suitables += (name -> Array(method, ingredients))

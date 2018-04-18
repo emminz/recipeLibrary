@@ -14,20 +14,19 @@ object Search {
     if (input.contains(',')) {
       val split = input.trim.split(',')
       if (split(0).head == '!') {
-        avoid = split(0).drop(1)
-        like = split(1)
+        avoid = split(0).drop(1).trim.toLowerCase
+        like = split(1).trim.toLowerCase
       }
       else if (split(1).head == '!') {
-        avoid = split(1).drop(1)
-        like = split(0)
+        avoid = split(1).drop(1).trim.toLowerCase
+        like = split(0).trim.toLowerCase
       }
     } else {
       if (input.head == '!') avoid = input.drop(1)
-      else like = input
+      else like = input.trim.toLowerCase
     }
     println("I see that you like " + like + " and hate " + avoid)
     val suitables = Reader.readRecipes(like, avoid)
-    println(suitables.mkString + " those suit ya")
     if (suitables.nonEmpty) {
       val chosen = pickOne(suitables)
       giveRecipe(chosen)

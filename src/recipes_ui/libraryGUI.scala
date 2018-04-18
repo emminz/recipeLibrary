@@ -379,9 +379,11 @@ object libraryGUI extends SimpleSwingApplication {
               else recipeBox.text = tryThis
             }
           }
-        } else if (keyEvent.source == this.NField && keyEvent.key == Key.Enter) {
+        } else if (keyEvent.source == this.NField) {
           try {
-            Search.N = NField.text.toInt
+            val nro = NField.text.toInt
+            if (nro >= 0) Search.N = nro
+            else emptySpace.text = "Use a positive number for\nallowance of missing ingredients."
           } catch {
             case e: Exception => emptySpace.text = "Please use numbers for\nallowance of missing ingredients."
           }
