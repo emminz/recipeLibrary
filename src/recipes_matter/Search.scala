@@ -32,6 +32,17 @@ object Search {
   }
   
   def giveRecipe(chosen: collection.mutable.Map[String, Array[String]]): String = {
+    var ingredientString = ""
+    val name = chosen.keys.head.toString
+    val method = chosen(name)(0)
+    val ingredients = chosen(name)(1).trim
+    val individuals = ingredients.trim.split('¤')
+    for (osa <- individuals) {
+      val amnt = osa.split('§')(0).trim
+      val ing = osa.split('§')(1).trim
+      ingredientString = ingredientString + amnt + " of " + ing + "\n"
+    }
+    name + "\n\n" + method + "\n\n" + ingredientString
   }
   
   def pickOne(suitables: collection.mutable.Map[String, Array[String]]): collection.mutable.Map[String, Array[String]] = {
