@@ -39,12 +39,16 @@ object libraryGUI extends SimpleSwingApplication {
       opaque = false
     }
     
+    val NField = new TextField(1) {
+      text = "0"
+      editable = true
+    }
     // Items needed for adding a recipe, displayed only in recipe adding view
     
     val addRecBtn = new Button("Done, save!") 
 //    val addIngBtn = new Button("Add another ingredient") 
     
-    val ingName = new TextField(20) {  { name = "ingName" } }
+    val ingName = new TextField(20)   { name = "ingName" }
     val ingName2 = new TextField(20)  { name = "ingName" }
     val ingName3 = new TextField(20)  { name = "ingName" }
     val ingName4 = new TextField(20)  { name = "ingName" }
@@ -95,6 +99,11 @@ object libraryGUI extends SimpleSwingApplication {
     val aller15 = new TextField(30)  { name = "aller" }
     
     val recMeth = new TextArea(5, 30)
+    
+    val NRow = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Allow missing: ")
+      contents += NField
+    }
     
     val ingredientRow = new BoxPanel(Orientation.Horizontal) {
       contents += ingAmnt
@@ -336,11 +345,12 @@ object libraryGUI extends SimpleSwingApplication {
     // Layout
     this.contents = new GridBagPanel {
       layout += recipeBox                -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 10, 5, 10), 0, 0)
-      layout += pantryButton             -> new Constraints(1, 1, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
+      layout += pantryButton             -> new Constraints(1, 2, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
       layout += searchBar                -> new Constraints(1, 0, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
-      layout += addRecipeButton          -> new Constraints(1, 2, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
-      layout += randomer                 -> new Constraints(1, 3, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
-      layout += emptySpace               -> new Constraints(1, 4, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(0, 0, 0, 10), 0, 0)
+      layout += NRow                     -> new Constraints(1, 1, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
+      layout += addRecipeButton          -> new Constraints(1, 3, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
+      layout += randomer                 -> new Constraints(1, 4, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
+      layout += emptySpace               -> new Constraints(1, 5, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(0, 0, 0, 10), 0, 0)
       layout += addRecView               -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 10, 5, 10), 0, 0)
       }
     
@@ -351,6 +361,7 @@ object libraryGUI extends SimpleSwingApplication {
     listenTo(addRecBtn)
     listenTo(recMeth.keys)
     listenTo(recName.keys)
+    listenTo(NField.keys)
     for (field <- fieldList) {
       listenTo(field)
     }
@@ -367,6 +378,12 @@ object libraryGUI extends SimpleSwingApplication {
               if (tryThis == "fail") recipeBox.text = "There are no recipes matching your searh.\nFeel free to try again."
               else recipeBox.text = tryThis
             }
+          }
+        } else if (keyEvent.source == this.NField && keyEvent.key == Key.Enter) {
+          try {
+            Search.N = NField.text.toInt
+          } catch {
+            case e: Exception => emptySpace.text = "Please use numbers for\nallowance of missing ingredients."
           }
         }
       case buttonEvent: ButtonClicked =>

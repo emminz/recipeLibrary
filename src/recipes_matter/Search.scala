@@ -3,6 +3,8 @@ package recipes_matter
 import recipes_ui._
 
 object Search {
+  
+  var N = 0
 
   // When input comes in, we need to know whether it's a like or a dislike
   // Returns the recipe as a string formatted and ready to be displayed

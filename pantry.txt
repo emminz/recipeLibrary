@@ -5,5 +5,4 @@ Known ingredients:
 # flour - 2000 g &gluten
 # lemon - 3 &citrus
 # sugar - 1000 g &§
-# yeast - 50 g &§
 # brown sugar - 0 g &§

@@ -43,21 +43,21 @@ object Pantry {
   
   // Converts the amounts, returns an Array like ("5", "dl", "sugar")
   def converter(amount: String, name: String): Array[String] = {
-    var nro = 0
+    var nro = 0.0
     var dlkg = ""
     if (amount.contains(" ")) {
       var amnt = amount.split(" ")
-      nro = amnt(0).toInt
+      nro = amnt(0).toDouble
       dlkg = amnt(1).toString
     } else if (amount.trim >= "0" && amount.trim <= "99999"){
-      nro = amount.trim.toInt
+      nro = amount.trim.toDouble
     }
     if (convertables.contains(name.toLowerCase)) {
       if (dlkg == "dl") {
-        nro = nro.toInt * convertables(name.toLowerCase).toInt
+        nro = nro.toDouble * convertables(name.toLowerCase).toDouble
         dlkg = "g"
       } else if (dlkg == "g") {
-        nro = nro.toInt / convertables(name.toLowerCase).toInt
+        nro = nro.toDouble / convertables(name.toLowerCase).toDouble
         dlkg = "dl"
       }
     }
