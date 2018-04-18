@@ -363,7 +363,9 @@ object libraryGUI extends SimpleSwingApplication {
             if (!Reader.checkSmartInput(command)) emptySpace.text = "Please don't search with\nspecial characters."
             else if (!Search.checkInput(command)) emptySpace.text = "You can use one good\nand one bad word\nin the search.\nNo more than that, please."
             else {
-              Search.dealWithInput(command)
+              val tryThis = Search.dealWithInput(command)
+              if (tryThis == "fail") recipeBox.text == "There are no recipes matching your searh.\nFeel free to try again."
+              else recipeBox.text = tryThis
             }
           }
         }

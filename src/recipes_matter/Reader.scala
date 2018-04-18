@@ -95,7 +95,7 @@ object Reader {
   
   // The following method goes through the recipe library and seeks out all recipes that fulfill the search criteria.
   // Returns a Map like ("Banana split" -> ("Take a banana, do something with it", "1 § banana ¤ 100 g § icecream ¤")
-  def readRecipes(like: String, avoid: String) = {
+  def readRecipes(like: String, avoid: String): collection.mutable.Map[String, Array[String]] = {
     try {
       val file = Source.fromFile(recipeFile)
       var suitables = collection.mutable.Map[String, Array[String]]()
@@ -123,8 +123,11 @@ object Reader {
       }
       suitables
     } catch {
-      case e: FileNotFoundException => println("Couldn't find that file.")
+      case e: FileNotFoundException => 
+        println("Couldn't find that file.")
+        collection.mutable.Map[String, Array[String]]("fail" -> Array("fail", "fail"))
       case e: IOException => println("Got an IOException!")
+        collection.mutable.Map[String, Array[String]]("fail" -> Array("fail", "fail"))
     }
   }
   

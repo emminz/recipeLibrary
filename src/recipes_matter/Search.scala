@@ -5,7 +5,8 @@ import recipes_ui._
 object Search {
 
   // When input comes in, we need to know whether it's a like or a dislike
-  def dealWithInput(input: String) = {
+  // Returns the recipe as a string formatted and ready to be displayed
+  def dealWithInput(input: String): String = {
     var avoid = ""
     var like = ""
     if (input.contains(',')) {
@@ -23,7 +24,20 @@ object Search {
       else like = input
     }
     println("I see that you like " + like + " and hate " + avoid)
-    Reader.readRecipes(like, avoid)
+    val suitables = Reader.readRecipes(like, avoid)
+    if (suitables.nonEmpty) {
+      val chosen = pickOne(suitables)
+      giveRecipe(chosen)
+    } else "fail"
+  }
+  
+  def giveRecipe(chosen: collection.mutable.Map[String, Array[String]]): String = {
+  }
+  
+  def pickOne(suitables: collection.mutable.Map[String, Array[String]]): collection.mutable.Map[String, Array[String]] = {
+    val keys = suitables.keySet
+    val chosenName = keys.head
+    collection.mutable.Map(chosenName -> suitables(chosenName))
   }
   
   // Checks if there's only one like and one dislike, returns true
