@@ -25,10 +25,13 @@ object Search {
     }
     println("I see that you like " + like + " and hate " + avoid)
     val suitables = Reader.readRecipes(like, avoid)
+    println(suitables.mkString + " those suit ya")
     if (suitables.nonEmpty) {
       val chosen = pickOne(suitables)
       giveRecipe(chosen)
-    } else "fail"
+    } else {
+      "fail"
+    }
   }
   
   def giveRecipe(chosen: collection.mutable.Map[String, Array[String]]): String = {
