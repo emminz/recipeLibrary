@@ -25,7 +25,6 @@ object Search {
       if (input.head == '!') avoid = input.drop(1)
       else like = input.trim.toLowerCase
     }
-    println("I see that you like " + like + " and hate " + avoid)
     val suitables = Reader.readRecipes(like, avoid)
     if (suitables.nonEmpty) {
       val chosen = pickOne(suitables)

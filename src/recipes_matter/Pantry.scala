@@ -5,7 +5,7 @@ import scala.collection.mutable.Map
 object Pantry {
   
   var ingredients = collection.mutable.Map[String, String]()
-  
+  var allergens = collection.mutable.Map[String, String]()
   val convertables = collection.mutable.Map[String, String](("sugar", "85"), ("flour", "65"), ("olive oil", "90"))
   
 //  def addIngredient(input: String, amount: Int) = {

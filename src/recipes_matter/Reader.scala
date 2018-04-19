@@ -22,7 +22,6 @@ object Reader {
 //  }
  
   
-  //TODO: sanitize input
   def recipeAdder(input: String) = {
     val split = input.split('#')
     val name = split(0)
@@ -75,15 +74,18 @@ object Reader {
   
   // The function below informs Pantry what the text file knows so that the info can be accessed easily
   def updatePantry = {
+    var allergen = ""
     try {
       val file = Source.fromFile(pantryFile)
       for (line <- file.getLines) {
         if (line.head == '#') {
           val parts = line.split('-')
           val name = parts(0).drop(1).trim
+          println("amount: " + parts(1).split('&')(0).trim + " allergen: " + parts(1).split('&')(1).trim)
           val amount = parts(1).split('&')(0).trim
-          //val allergen = parts(0).split('&')(1).trim
+          allergen = parts(1).split('&')(1).trim
           Pantry.ingredients.update(name, amount)
+          if (allergen != "§") Pantry.allergens.update(name, allergen)
         }
       }
       file.close()
@@ -135,7 +137,6 @@ object Reader {
               val ing = ingredients.trim.split('¤')
               for (osa <- ing) {
                 val palat = osa.trim.split('§')
-                println("pala1: " + palat(0).trim + "pala2: " + palat(1).trim)
                 if (!checkAmount(palat(0).trim, palat(1).trim)) missing += 1
               }
               if (Search.N >= missing) suitables += (name -> Array(method, ingredients))
@@ -144,24 +145,28 @@ object Reader {
             val ing = ingredients.trim.split('¤')
             for (osa <- ing) {
               val palat = osa.trim.split('§')
-              println("pala1: " + palat(0).trim + "pala2: " + palat(1).trim)
               if (!checkAmount(palat(0).trim, palat(1).trim)) missing += 1
-              println(missing)
-              println(Search.N)
             }
             if (Search.N >= missing) suitables += (name -> Array(method, ingredients))
           }
           println(suitables.toString)
         } // Now all the suitable recipes are in a Map ready to be dropped in the next stage
       } 
-      println(avoid)
       if (avoid != "") { // If the ingredients contain an ingredient or allergen that should be avoided, the recipe will be dropped
         for (osa <- suitables) {
-          println("avoiding")
-          println(osa._1).toString
           for (pala <- osa._2) {
-            if (pala.contains(avoid)) {
-              suitables -= osa._1
+            println(Pantry.allergens.toString)
+            if (pala.contains('§')) {
+              if (pala.contains(avoid)) suitables -= osa._1
+              else {
+                val parts = pala.trim.split('¤')
+                for (part <- parts) {
+                  val indivs = part.trim.split('§')
+                  val nimi = indivs(1).trim
+                  val inAllergens = Pantry.allergens.contains(nimi)
+                  if (inAllergens && Pantry.allergens(nimi) == avoid) suitables -= osa._1
+                }
+              }
             }
           }
         }
