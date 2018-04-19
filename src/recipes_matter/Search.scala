@@ -21,7 +21,7 @@ object Search {
         avoid = split(1).drop(1).trim.toLowerCase
         like = split(0).trim.toLowerCase
       }
-    } else {
+    } else if (input != "") {
       if (input.head == '!') avoid = input.drop(1)
       else like = input.trim.toLowerCase
     }

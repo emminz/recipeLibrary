@@ -123,7 +123,10 @@ object Reader {
       var method = ""
       var ingredients = ""
       for (line <- file.getLines) {
-        if (line.head == '#') name = line.drop(1).trim
+        if (line.head == '#') {
+          name = line.drop(1).trim
+          missing = 0 // Let's reset missing to start at 0 for each recipe
+        }
         else if (line.head == '[') method = line.drop(1).trim
         else if (line.head == '%') {
           ingredients = line.drop(1).trim
@@ -135,17 +138,29 @@ object Reader {
                 println("pala1: " + palat(0).trim + "pala2: " + palat(1).trim)
                 if (!checkAmount(palat(0).trim, palat(1).trim)) missing += 1
               }
-              if (Search.N >= missing) suitables += (name -> Array(method, ingredients)); println(missing)
+              if (Search.N >= missing) suitables += (name -> Array(method, ingredients))
             }
           } else {
-            suitables += (name -> Array(method, ingredients))
+            val ing = ingredients.trim.split('¤')
+            for (osa <- ing) {
+              val palat = osa.trim.split('§')
+              println("pala1: " + palat(0).trim + "pala2: " + palat(1).trim)
+              if (!checkAmount(palat(0).trim, palat(1).trim)) missing += 1
+              println(missing)
+            }
+            if (Search.N >= missing) suitables += (name -> Array(method, ingredients))
           }
+          
         } // Now all the suitable recipes are in a Map ready to be dropped in the next stage
       } 
+      println(avoid)
       if (avoid != "") { // If the ingredients contain an ingredient or allergen that should be avoided, the recipe will be dropped
         for (osa <- suitables) {
-          if (osa._2.contains(avoid)) {
-            suitables -= osa._1
+          println(osa._1).toString
+          for (pala <- osa._2) {
+            if (pala.contains(avoid)) {
+              suitables -= osa._1
+            }
           }
         }
       }

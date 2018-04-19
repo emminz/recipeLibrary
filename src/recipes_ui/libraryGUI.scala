@@ -360,6 +360,7 @@ object libraryGUI extends SimpleSwingApplication {
     listenTo(addRecipeButton)
     listenTo(addRecBtn)
     listenTo(recMeth.keys)
+    listenTo(randomer)
     listenTo(recName.keys)
     listenTo(NField.keys)
     for (field <- fieldList) {
@@ -369,13 +370,15 @@ object libraryGUI extends SimpleSwingApplication {
     this.reactions += {
       case keyEvent: KeyPressed =>
         if (keyEvent.source == this.searchBar && keyEvent.key == Key.Enter) {
+          val nro = NField.text.toInt
+          if (nro >= 0) Search.N = nro
           val command = this.searchBar.text.trim
           if (command.nonEmpty) {
             if (!Reader.checkSmartInput(command)) emptySpace.text = "Please don't search with\nspecial characters."
             else if (!Search.checkInput(command)) emptySpace.text = "You can use one good\nand one bad word\nin the search.\nNo more than that, please."
             else {
               val tryThis = Search.dealWithInput(command)
-              if (tryThis == "fail") recipeBox.text = "There are no recipes matching your searh.\nFeel free to try again."
+              if (tryThis == "fail") recipeBox.text = "There are no recipes matching your search.\nFeel free to try again."
               else recipeBox.text = tryThis
             }
           }
@@ -394,7 +397,7 @@ object libraryGUI extends SimpleSwingApplication {
         } else if (buttonEvent.source == this.addRecipeButton) {
           updateUI("addingRecipe")
         } else if (buttonEvent.source == this.randomer) {
-          //TODO: give random recipe
+          Search.dealWithInput("")
         } else if (buttonEvent.source == this.addRecBtn) {
           println("Adding recipe")
           if (recName.text != "" && recMeth.text != "") {
