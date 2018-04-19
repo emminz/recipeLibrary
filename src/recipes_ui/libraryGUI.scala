@@ -100,6 +100,26 @@ object libraryGUI extends SimpleSwingApplication {
     
     val recMeth = new TextArea(5, 30)
     
+    val shoppingAmount = new TextField(2)
+    val shoppingName = new TextField(2)
+    val shoppingAdd = new Button("Add")
+    val shoppingRemove = new Button("Reduce")
+    val shopText = new TextArea(5, 30)
+    val toShopButton = new Button("Add or remove ingredients")
+    
+    val shopButtonRow = new BoxPanel(Orientation.Horizontal) {
+      contents += shoppingAdd
+      contents += Swing.HStrut(15)
+      contents += shoppingRemove
+    }
+    
+    val shoppingRow = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
+      contents += shoppingAmount
+      contents += new Label(" of ")
+      contents += shoppingName
+    }
+    
     val NRow = new BoxPanel(Orientation.Horizontal) {
       contents += new Label("Allow missing: ")
       contents += NField
@@ -303,6 +323,14 @@ object libraryGUI extends SimpleSwingApplication {
         ingAmnt14, ingName14, aller14,
         ingAmnt15, ingName15, aller15
         )
+        
+    val shoppingView = new BoxPanel(Orientation.Vertical) {
+      contents += shopText
+      contents += Swing.VStrut(10)
+      contents += shoppingRow
+      contents += Swing.VStrut(10)
+      contents += shopButtonRow
+    }
     
     var addRecView = new BoxPanel(Orientation.Vertical) {
       contents += recName
@@ -350,8 +378,10 @@ object libraryGUI extends SimpleSwingApplication {
       layout += NRow                     -> new Constraints(1, 1, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
       layout += addRecipeButton          -> new Constraints(1, 3, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
       layout += randomer                 -> new Constraints(1, 4, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
-      layout += emptySpace               -> new Constraints(1, 5, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(0, 0, 0, 10), 0, 0)
+      layout += toShopButton             -> new Constraints(1, 5, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
+      layout += emptySpace               -> new Constraints(1, 6, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(0, 0, 0, 10), 0, 0)
       layout += addRecView               -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 10, 5, 10), 0, 0)
+      layout += shoppingView             -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 10, 5, 10), 0, 0)
       }
     
     // Listen & react
@@ -363,6 +393,9 @@ object libraryGUI extends SimpleSwingApplication {
     listenTo(randomer)
     listenTo(recName.keys)
     listenTo(NField.keys)
+    listenTo(toShopButton)
+    listenTo(shoppingAdd)
+    listenTo(shoppingRemove)
     for (field <- fieldList) {
       listenTo(field)
     }
@@ -398,6 +431,8 @@ object libraryGUI extends SimpleSwingApplication {
           val random = Search.dealWithInput("")
           if (random == "fail") recipeBox.text = "You don't have enough ingredients for any recipe.\nSorry."
           else recipeBox.text = random
+        } else if (buttonEvent.source == this.toShopButton) {
+          updateUI("shopping")
         } else if (buttonEvent.source == this.addRecBtn) {
           println("Adding recipe")
           if (recName.text != "" && recMeth.text != "") {
@@ -455,18 +490,25 @@ object libraryGUI extends SimpleSwingApplication {
     
     // Setting up the initial state
     addRecView.visible = false
+    shoppingView.visible = false
     Reader.updatePantry
     
     def updateUI(input: String) = {
       if (input == "addingRecipe") {
         recipeBox.visible = false
+        shoppingView.visible = false
         addRecView.visible = true     
         emptySpace.text = ""
       } else if (input == "pantry") {
         recipeBox.visible = true
+        shoppingView.visible = false
         addRecView.visible = false
         recipeBox.text = Pantry.pantryInfo
         emptySpace.text = ""
+      } else if (input == "shopping") {
+        recipeBox.visible = false
+        addRecView.visible = false
+        shoppingView.visible = true
       }
     }
     
