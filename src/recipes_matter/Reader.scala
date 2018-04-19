@@ -147,15 +147,17 @@ object Reader {
               println("pala1: " + palat(0).trim + "pala2: " + palat(1).trim)
               if (!checkAmount(palat(0).trim, palat(1).trim)) missing += 1
               println(missing)
+              println(Search.N)
             }
             if (Search.N >= missing) suitables += (name -> Array(method, ingredients))
           }
-          
+          println(suitables.toString)
         } // Now all the suitable recipes are in a Map ready to be dropped in the next stage
       } 
       println(avoid)
       if (avoid != "") { // If the ingredients contain an ingredient or allergen that should be avoided, the recipe will be dropped
         for (osa <- suitables) {
+          println("avoiding")
           println(osa._1).toString
           for (pala <- osa._2) {
             if (pala.contains(avoid)) {

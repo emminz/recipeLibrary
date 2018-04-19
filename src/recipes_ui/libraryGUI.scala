@@ -370,8 +370,6 @@ object libraryGUI extends SimpleSwingApplication {
     this.reactions += {
       case keyEvent: KeyPressed =>
         if (keyEvent.source == this.searchBar && keyEvent.key == Key.Enter) {
-          val nro = NField.text.toInt
-          if (nro >= 0) Search.N = nro
           val command = this.searchBar.text.trim
           if (command.nonEmpty) {
             if (!Reader.checkSmartInput(command)) emptySpace.text = "Please don't search with\nspecial characters."
@@ -397,7 +395,9 @@ object libraryGUI extends SimpleSwingApplication {
         } else if (buttonEvent.source == this.addRecipeButton) {
           updateUI("addingRecipe")
         } else if (buttonEvent.source == this.randomer) {
-          Search.dealWithInput("")
+          val random = Search.dealWithInput("")
+          if (random == "fail") recipeBox.text = "You don't have enough ingredients for any recipe.\nSorry."
+          else recipeBox.text = random
         } else if (buttonEvent.source == this.addRecBtn) {
           println("Adding recipe")
           if (recName.text != "" && recMeth.text != "") {
