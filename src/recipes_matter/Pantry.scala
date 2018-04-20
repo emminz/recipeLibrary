@@ -8,22 +8,11 @@ object Pantry {
   var allergens = collection.mutable.Map[String, String]()
   val convertables = collection.mutable.Map[String, String](("sugar", "85"), ("flour", "65"), ("olive oil", "90"))
   
-//  def addIngredient(input: String, amount: Int) = {
-//    if (ingredients.contains(input)) {
-//      changeAmount(input, amount, "add")
-//      println("The ingredient exists. Amount added to existing ingredient.")
-//    } else ingredients(input) = amount
-//  }
-//  
-//  def changeAmount(ingredient: String, amount: Int, way: String) = {
-//    if (this.ingredients.contains(ingredient)) {
-//      if (way == "reduce") {
-//        if (ingredients(ingredient) - amount > 0) ingredients(ingredient) = ingredients(ingredient) - amount
-//        else ingredients(ingredient) = 0
-//      }
-//      else ingredients(ingredient) = ingredients(ingredient) + amount
-//    }
-//  }
+  def changeAmount(amount: String, ingredient: String, allrgen: String, way: String) = {
+    if (this.ingredients.contains(ingredient)) {
+      
+    }
+  }
 
   def pantryInfo: String = {
     Reader.updatePantry

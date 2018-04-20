@@ -37,6 +37,8 @@ object libraryGUI extends SimpleSwingApplication {
     val emptySpace = new TextArea(5, 33) {
       editable = false
       opaque = false
+      wordWrap = true
+      lineWrap = true
     }
     
     val NField = new TextField(1) {
@@ -100,16 +102,23 @@ object libraryGUI extends SimpleSwingApplication {
     
     val recMeth = new TextArea(5, 30)
     
-    val shoppingAmount = new TextField(2)
-    val shoppingName = new TextField(2)
+    val shoppingAmount = new TextField(1)
+    val shoppingName = new TextField(1)
     val shoppingAdd = new Button("Add")
     val shoppingRemove = new Button("Reduce")
-    val shopText = new TextArea(5, 30)
+    val shoppingAller = new TextField(1)
+    val shopText = new TextArea(10, 88) { 
+      editable = false
+      lineWrap = true
+      wordWrap = true
+      text = "Here you can add ingredients or update an existing amount after shopping or reduce the amount as ingredients need to go.\n\nDon't worry, we all let things spoil sometimes."
+      }
     val toShopButton = new Button("Add or remove ingredients")
     
     val shopButtonRow = new BoxPanel(Orientation.Horizontal) {
+      contents += Swing.HStrut(60)
       contents += shoppingAdd
-      contents += Swing.HStrut(15)
+      contents += Swing.HStrut(40)
       contents += shoppingRemove
     }
     
@@ -118,6 +127,8 @@ object libraryGUI extends SimpleSwingApplication {
       contents += shoppingAmount
       contents += new Label(" of ")
       contents += shoppingName
+      contents += new Label("Contains allergen:")
+      contents += shoppingAller
     }
     
     val NRow = new BoxPanel(Orientation.Horizontal) {
@@ -126,6 +137,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
     
     val ingredientRow = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
       contents += ingAmnt
       contents += Swing.HStrut(5)
       contents += new Label("of")
@@ -138,6 +150,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
     
     val ingredientRow2 = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
       contents += ingAmnt2
       contents += Swing.HStrut(5)
       contents += new Label("of")
@@ -150,6 +163,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow3 = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
       contents += ingAmnt3
       contents += Swing.HStrut(5)
       contents += new Label("of")
@@ -162,6 +176,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow4 = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
       contents += ingAmnt4
       contents += Swing.HStrut(5)
       contents += new Label("of")
@@ -174,6 +189,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow5 = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
       contents += ingAmnt5
       contents += Swing.HStrut(5)
       contents += new Label("of")
@@ -186,6 +202,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow6 = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
       contents += ingAmnt6
       contents += Swing.HStrut(5)
       contents += new Label("of")
@@ -198,6 +215,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow7 = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
       contents += ingAmnt7
       contents += Swing.HStrut(5)
       contents += new Label("of")
@@ -210,6 +228,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow8 = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
       contents += ingAmnt8
       contents += Swing.HStrut(5)
       contents += new Label("of")
@@ -222,6 +241,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow9 = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
       contents += ingAmnt9
       contents += Swing.HStrut(5)
       contents += new Label("of")
@@ -234,6 +254,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow10 = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
       contents += ingAmnt10
       contents += Swing.HStrut(5)
       contents += new Label("of")
@@ -246,6 +267,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow11 = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
       contents += ingAmnt11
       contents += Swing.HStrut(5)
       contents += new Label("of")
@@ -258,6 +280,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow12 = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
       contents += ingAmnt12
       contents += Swing.HStrut(5)
       contents += new Label("of")
@@ -270,6 +293,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow13 = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
       contents += ingAmnt13
       contents += Swing.HStrut(5)
       contents += new Label("of")
@@ -282,6 +306,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow14 = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
       contents += ingAmnt14
       contents += Swing.HStrut(5)
       contents += new Label("of")
@@ -294,6 +319,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
         
     val ingredientRow15 = new BoxPanel(Orientation.Horizontal) {
+      contents += new Label("Amount: ")
       contents += ingAmnt15
       contents += Swing.HStrut(5)
       contents += new Label("of")
@@ -326,10 +352,11 @@ object libraryGUI extends SimpleSwingApplication {
         
     val shoppingView = new BoxPanel(Orientation.Vertical) {
       contents += shopText
-      contents += Swing.VStrut(10)
+      contents += Swing.VStrut(40)
       contents += shoppingRow
-      contents += Swing.VStrut(10)
+      contents += Swing.VStrut(30)
       contents += shopButtonRow
+      contents += Swing.VStrut(200)
     }
     
     var addRecView = new BoxPanel(Orientation.Vertical) {
@@ -396,6 +423,9 @@ object libraryGUI extends SimpleSwingApplication {
     listenTo(toShopButton)
     listenTo(shoppingAdd)
     listenTo(shoppingRemove)
+    listenTo(shoppingAmount.keys)
+    listenTo(shoppingName.keys)
+    listenTo(shoppingAller.keys)
     for (field <- fieldList) {
       listenTo(field)
     }
@@ -405,9 +435,10 @@ object libraryGUI extends SimpleSwingApplication {
         if (keyEvent.source == this.searchBar && keyEvent.key == Key.Enter) {
           val command = this.searchBar.text.trim
           if (command.nonEmpty) {
-            if (!Reader.checkSmartInput(command)) emptySpace.text = "Please don't search with\nspecial characters."
-            else if (!Search.checkInput(command)) emptySpace.text = "You can use one good\nand one bad word\nin the search.\nNo more than that, please."
+            if (!Reader.checkSmartInput(command)) emptySpace.text = "Please don't search with special characters."
+            else if (!Search.checkInput(command)) emptySpace.text = "You can use one good and one bad word in the search.\nNo more than that, please."
             else {
+              updateUI("showRecipe")
               val tryThis = Search.dealWithInput(command)
               if (tryThis == "fail") recipeBox.text = "There are no recipes matching your search.\nFeel free to try again."
               else recipeBox.text = tryThis
@@ -417,9 +448,9 @@ object libraryGUI extends SimpleSwingApplication {
           try {
             val nro = NField.text.toInt
             if (nro >= 0) Search.N = nro
-            else emptySpace.text = "Use a positive number for\nallowance of missing ingredients."
+            else emptySpace.text = "Use a positive number for allowance of missing ingredients."
           } catch {
-            case e: Exception => emptySpace.text = "Please use numbers for\nallowance of missing ingredients."
+            case e: Exception => emptySpace.text = "Please use numbers for allowance of missing ingredients."
           }
         }
       case buttonEvent: ButtonClicked =>
@@ -428,11 +459,30 @@ object libraryGUI extends SimpleSwingApplication {
         } else if (buttonEvent.source == this.addRecipeButton) {
           updateUI("addingRecipe")
         } else if (buttonEvent.source == this.randomer) {
+          updateUI("showRecipe")
           val random = Search.dealWithInput("")
           if (random == "fail") recipeBox.text = "You don't have enough ingredients for any recipe.\nSorry."
           else recipeBox.text = random
         } else if (buttonEvent.source == this.toShopButton) {
           updateUI("shopping")
+        } else if (buttonEvent.source == this.shoppingAdd) {
+          val notMissing: Boolean = {
+            if (shoppingName.text != "") shoppingAmount.text != ""
+            else if (shoppingAmount.text != "") shoppingName.text != ""
+            else false
+          }
+          if (Reader.checkSmartInput(shoppingAmount.text) && Reader.checkSmartInput(shoppingName.text) && Reader.checkSmartInput(shoppingAller.text) && notMissing) {
+            Pantry.changeAmount(shoppingAmount.text.trim, shoppingName.text.trim, shoppingAller.text.trim, "add")
+          } else emptySpace.text = "Let's not use any special characters."
+        } else if (buttonEvent.source == this.shoppingRemove) {
+          val notMissing: Boolean = {
+            if (shoppingName.text != "") shoppingAmount.text != ""
+            else if (shoppingAmount.text != "") shoppingName.text != ""
+            else false
+          }
+          if (Reader.checkSmartInput(shoppingAmount.text) && Reader.checkSmartInput(shoppingName.text) && Reader.checkSmartInput(shoppingAller.text) && notMissing) {
+            Pantry.changeAmount(shoppingAmount.text.trim, shoppingName.text.trim, shoppingAller.text.trim, "reduce")
+          } else emptySpace.text = "Let's not use any special characters."
         } else if (buttonEvent.source == this.addRecBtn) {
           println("Adding recipe")
           if (recName.text != "" && recMeth.text != "") {
@@ -446,7 +496,7 @@ object libraryGUI extends SimpleSwingApplication {
                 for (field <- fieldList) {
                   if (!Reader.checkSmartInput(field.text.trim.toString)) { // Checking whether the field contains special chars
                     problemFound = true
-                    emptySpace.text = "Let's not use\nany special characters."
+                    emptySpace.text = "Let's not use any special characters."
                   }
                   else {
                     if (!problemFound) {
@@ -473,17 +523,17 @@ object libraryGUI extends SimpleSwingApplication {
                           if (friendName != "" && friendAller != "") missingFound = true
                         } // close emptiness else
                       } // close 4th letter checking if
-                    } else emptySpace.text = "Let's not use\nany special characters."
+                    } else emptySpace.text = "Let's not use any special characters."
                   }
                 }
                 if (!missingFound && !problemFound) {
                   Reader.recipeAdder(recName.text.trim.toString + "#" + recMeth.text.trim.toString + "#" + ingredientString) //No problems, so all info sent to be added to the recipe library
                   Reader.ingredientAdder(pantryString) //We can also add all the ingredient to the pantry since the recipe is acceptable
                 }
-                else emptySpace.text = "Some ingredient info\nis missing! Please fix."
-              } else emptySpace.text = "Let's not use\nany special characters."
+                else emptySpace.text = "Some ingredient info is missing! Please fix."
+              } else emptySpace.text = "Let's not us nany special characters."
             }
-          } else emptySpace.text = "Your recipe needs\na name and a method."
+          } else emptySpace.text = "Your recipe needs a name and a method."
         }
       }
         
@@ -509,6 +559,10 @@ object libraryGUI extends SimpleSwingApplication {
         recipeBox.visible = false
         addRecView.visible = false
         shoppingView.visible = true
+      } else if (input == "showRecipe") {
+        recipeBox.visible = true
+        addRecView.visible = false
+        shoppingView.visible = false
       }
     }
     
