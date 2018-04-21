@@ -114,6 +114,23 @@ object Pantry {
     }
     Array(nro.toString, dlkg.toString, name.toLowerCase)
   }
+  
+  // Takes in Map like (banana flakes -> 100 g)
+  def useRecipe(ingredientsMap: collection.mutable.Map[String, String]): String = {
+    for (ing <- ingredientsMap) {
+      val amount = {
+        if(ing._2.contains(' ')) ing._2.split(' ')(0)
+        else ing._2
+      }
+      val compare = {
+        if(this.ingredients(ing._1).contains(' ')) this.ingredients(ing._1).split(' ')(0)
+        else this.ingredients(ing._1)
+      }
+      if (compare.toDouble >= amount.toDouble) changeAmount(ing._2, ing._1, "", "reduce")
+      else changeAmount(compare, ing._1, "", "reduce")
+    }
+    "Yum yum, got it! Reduced the ingredients from the pantry. Happy cooking!"
+  }
 
   def openingMessage: String = "Welcome to the recipe library!\nLet's get cooking."
   

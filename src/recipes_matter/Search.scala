@@ -5,6 +5,8 @@ import recipes_ui._
 object Search {
   
   var N = 0
+  
+  val ingredientMap = collection.mutable.Map[String, String]()
 
   // When input comes in, we need to know whether it's a like or a dislike
   // Returns the recipe as a string formatted and ready to be displayed
@@ -43,6 +45,24 @@ object Search {
     for (osa <- individuals) {
       val amnt = osa.split('§')(0).trim
       val ing = osa.split('§')(1).trim
+      if (!ingredientMap.contains(ing)) ingredientMap.update(ing, amnt)
+      else {
+        var newAmnt = 0.0
+        var finalAmnt = ""
+        var savedlkg = ""
+        var oldAmnt = {
+          if (amnt.contains(' ')) amnt(0).toDouble
+          else amnt.toDouble
+        }
+        if (ingredientMap(ing).contains(' ')) {
+          newAmnt = ingredientMap(ing).split(' ')(0).toDouble
+          savedlkg = ingredientMap(ing).split(' ')(1)
+          newAmnt = newAmnt + oldAmnt
+          finalAmnt = newAmnt.toString + " " + savedlkg
+        }
+        else finalAmnt = amnt
+        ingredientMap.update(ing, finalAmnt)
+      }
       ingredientString = ingredientString + amnt + " of " + ing + "\n"
     }
     name + "\n\n" + method + "\n\n" + ingredientString

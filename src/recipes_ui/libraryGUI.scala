@@ -48,7 +48,8 @@ object libraryGUI extends SimpleSwingApplication {
     // Items needed for adding a recipe, displayed only in recipe adding view
     
     val addRecBtn = new Button("Done, save!") 
-//    val addIngBtn = new Button("Add another ingredient") 
+    
+    val useRecBtn = new Button("Make this!")
     
     val ingName = new TextField(20)   { name = "ingName" }
     val ingName2 = new TextField(20)  { name = "ingName" }
@@ -408,7 +409,8 @@ object libraryGUI extends SimpleSwingApplication {
       layout += addRecipeButton          -> new Constraints(1, 3, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
       layout += randomer                 -> new Constraints(1, 4, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
       layout += toShopButton             -> new Constraints(1, 5, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
-      layout += emptySpace               -> new Constraints(1, 6, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(0, 0, 0, 10), 0, 0)
+      layout += useRecBtn                -> new Constraints(1, 6, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
+      layout += emptySpace               -> new Constraints(1, 7, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(0, 0, 0, 10), 0, 0)
       layout += addRecView               -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 10, 5, 10), 0, 0)
       layout += shoppingView             -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 10, 5, 10), 0, 0)
       }
@@ -428,6 +430,7 @@ object libraryGUI extends SimpleSwingApplication {
     listenTo(shoppingAmount.keys)
     listenTo(shoppingName.keys)
     listenTo(shoppingAller.keys)
+    listenTo(useRecBtn)
     for (field <- fieldList) {
       listenTo(field)
     }
@@ -460,6 +463,8 @@ object libraryGUI extends SimpleSwingApplication {
           updateUI("pantry")
         } else if (buttonEvent.source == this.addRecipeButton) {
           updateUI("addingRecipe")
+        } else if (buttonEvent.source == this.useRecBtn) {
+          emptySpace.text = Pantry.useRecipe(Search.ingredientMap)
         } else if (buttonEvent.source == this.randomer) {
           updateUI("showRecipe")
           val random = Search.dealWithInput("")
@@ -542,28 +547,33 @@ object libraryGUI extends SimpleSwingApplication {
     // Setting up the initial state
     addRecView.visible = false
     shoppingView.visible = false
+    useRecBtn.visible = false
     Reader.updatePantry
     
     def updateUI(input: String) = {
       if (input == "addingRecipe") {
         recipeBox.visible = false
         shoppingView.visible = false
-        addRecView.visible = true     
+        addRecView.visible = true
+        useRecBtn.visible = false
         emptySpace.text = ""
       } else if (input == "pantry") {
         recipeBox.visible = true
         shoppingView.visible = false
         addRecView.visible = false
+        useRecBtn.visible = false
         recipeBox.text = Pantry.pantryInfo
         emptySpace.text = ""
       } else if (input == "shopping") {
         recipeBox.visible = false
         addRecView.visible = false
+        useRecBtn.visible = false
         shoppingView.visible = true
       } else if (input == "showRecipe") {
         recipeBox.visible = true
         addRecView.visible = false
         shoppingView.visible = false
+        useRecBtn.visible = true
       }
     }
     
