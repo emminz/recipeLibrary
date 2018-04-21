@@ -12,16 +12,6 @@ object Reader {
   val recipeFile = "recipe_library.txt"
   val pantryFile = "pantry.txt"
   
-//  try {
-//      for (line <- Source.fromFile(recipeFile).getLines) {
-//          println(line)
-//      }
-//  } catch {
-//      case e: FileNotFoundException => println("Couldn't find that file.")
-//      case e: IOException => println("Got an IOException!")
-//  }
- 
-  
   def recipeAdder(input: String) = {
     val split = input.split('#')
     val name = split(0)
@@ -81,7 +71,6 @@ object Reader {
         if (line.head == '#') {
           val parts = line.split('-')
           val name = parts(0).drop(1).trim
-          println("amount: " + parts(1).split('&')(0).trim + " allergen: " + parts(1).split('&')(1).trim)
           val amount = parts(1).split('&')(0).trim
           allergen = parts(1).split('&')(1).trim
           Pantry.ingredients.update(name, amount)
@@ -91,6 +80,41 @@ object Reader {
       file.close()
     } catch {
       case e: FileNotFoundException => println("Couldn't find that file.")
+      case e: IOException => println("Got an IOException!")
+    }
+  }
+  
+//  val f1 = "svn.txt"  // Original File
+//  val f2 = new File("/tmp/abc.txt") // Temporary File
+//  val w = new PrintWriter(f2)
+//  Source.fromFile(f1).getLines
+//    .map { x => if(x.contains("proxy")) s"# $x" else x }
+//    .foreach(x => w.println(x))
+//  w.close()
+//  f2.renameTo(f1)
+  
+  def updateFile = {
+    try {
+      var name = ""
+      var amount = ""
+      var allergen = ""
+//      val oldFile = new File("pantry.txt")
+      val rw = new FileWriter(new File(pantryFile), false)
+      rw.write("Known ingredients:\n& marks allergen")
+      for (ingredient <- Pantry.ingredients) {
+        name = ingredient._1
+        amount = ingredient._2
+        if (Pantry.allergens.contains(name)) allergen = Pantry.allergens(name)
+        else allergen = "§"
+        println("# " + name + " - " + amount + " &" + allergen)
+        rw.write("\n# " + name + " - " + amount + " &" + allergen)
+      }
+      rw.flush()
+      rw.close()
+      println("renaming")
+      //newFile.renameTo(oldFile)
+    } catch {
+      case e: FileNotFoundException => println("Pantry file is missing.")
       case e: IOException => println("Got an IOException!")
     }
   }

@@ -127,7 +127,7 @@ object libraryGUI extends SimpleSwingApplication {
       contents += shoppingAmount
       contents += new Label(" of ")
       contents += shoppingName
-      contents += new Label("Contains allergen:")
+      contents += new Label(" Contains allergen:")
       contents += shoppingAller
     }
     
@@ -472,7 +472,7 @@ object libraryGUI extends SimpleSwingApplication {
             else false
           }
           if (Reader.checkSmartInput(shoppingAmount.text) && Reader.checkSmartInput(shoppingName.text) && Reader.checkSmartInput(shoppingAller.text) && notMissing) {
-            Pantry.changeAmount(shoppingAmount.text.trim, shoppingName.text.trim, shoppingAller.text.trim, "add")
+            this.shopText.text = Pantry.changeAmount(shoppingAmount.text.trim.toLowerCase, shoppingName.text.trim.toLowerCase, shoppingAller.text.trim.toLowerCase, "add")
           } else emptySpace.text = "Let's not use any special characters."
         } else if (buttonEvent.source == this.shoppingRemove) {
           val notMissing: Boolean = {
@@ -480,39 +480,39 @@ object libraryGUI extends SimpleSwingApplication {
             else if (shoppingAmount.text != "") shoppingName.text != ""
             else false
           }
-          if (Reader.checkSmartInput(shoppingAmount.text) && Reader.checkSmartInput(shoppingName.text) && Reader.checkSmartInput(shoppingAller.text) && notMissing) {
-            Pantry.changeAmount(shoppingAmount.text.trim, shoppingName.text.trim, shoppingAller.text.trim, "reduce")
+          if (Reader.checkSmartInput(shoppingAmount.text) && Reader.checkSmartInput(shoppingName.text) && notMissing) {
+            Pantry.changeAmount(shoppingAmount.text.trim.toLowerCase, shoppingName.text.trim.toLowerCase, "", "reduce")
           } else emptySpace.text = "Let's not use any special characters."
         } else if (buttonEvent.source == this.addRecBtn) {
           println("Adding recipe")
           if (recName.text != "" && recMeth.text != "") {
             if (ingName.text == "" || ingAmnt.text == "") emptySpace.text = "Let's fill the ingredients.\nFrom the top, please."
             else {
-              if (Reader.checkSmartInput(recName.text.toString) && Reader.checkSmartInput(recMeth.text.toString)) {
+              if (Reader.checkSmartInput(recName.text) && Reader.checkSmartInput(recMeth.text)) {
                 var problemFound = false
                 var missingFound = false
                 var ingredientString = ""
                 var pantryString = ""
                 for (field <- fieldList) {
-                  if (!Reader.checkSmartInput(field.text.trim.toString)) { // Checking whether the field contains special chars
+                  if (!Reader.checkSmartInput(field.text.trim.toLowerCase)) { // Checking whether the field contains special chars
                     problemFound = true
                     emptySpace.text = "Let's not use any special characters."
                   }
                   else {
                     if (!problemFound) {
                       if (field.name.charAt(3) == 'A') { // For every Amount field, see if name and allergen are also filled out
-                        val friendName = fieldList(fieldList.indexOf(field)+1).text
-                        val friendAller = fieldList(fieldList.indexOf(field)+2).text
+                        val friendName = fieldList(fieldList.indexOf(field)+1).text.toLowerCase
+                        val friendAller = fieldList(fieldList.indexOf(field)+2).text.toLowerCase
                         if (field.text != "") {
                           if (friendName == "") { // If Amount field is empty, name field needs to be empty too
                             missingFound = true
                           }
                           else {
-                            ingredientString = ingredientString + field.text.trim.toString + " § " + friendName.trim.toString
-                            pantryString = pantryString + field.text.trim.toString + " § " + friendName.trim.toString
+                            ingredientString = ingredientString + field.text.trim.toLowerCase + " § " + friendName.trim.toLowerCase
+                            pantryString = pantryString + field.text.trim.toLowerCase + " § " + friendName.trim.toLowerCase
                             if (friendAller != "") {
                               ingredientString = ingredientString + " ¤ "
-                              pantryString = pantryString + " § " + friendAller.trim.toString + " ¤ "
+                              pantryString = pantryString + " § " + friendAller.trim.toLowerCase + " ¤ "
                             }
                             else {
                               ingredientString = ingredientString + " ¤ "
@@ -527,7 +527,7 @@ object libraryGUI extends SimpleSwingApplication {
                   }
                 }
                 if (!missingFound && !problemFound) {
-                  Reader.recipeAdder(recName.text.trim.toString + "#" + recMeth.text.trim.toString + "#" + ingredientString) //No problems, so all info sent to be added to the recipe library
+                  Reader.recipeAdder(recName.text.trim + "#" + recMeth.text.trim + "#" + ingredientString) //No problems, so all info sent to be added to the recipe library
                   Reader.ingredientAdder(pantryString) //We can also add all the ingredient to the pantry since the recipe is acceptable
                 }
                 else emptySpace.text = "Some ingredient info is missing! Please fix."

@@ -8,10 +8,69 @@ object Pantry {
   var allergens = collection.mutable.Map[String, String]()
   val convertables = collection.mutable.Map[String, String](("sugar", "85"), ("flour", "65"), ("olive oil", "90"))
   
-  def changeAmount(amount: String, ingredient: String, allrgen: String, way: String) = {
-    if (this.ingredients.contains(ingredient)) {
-      
+  def changeAmount(amount: String, ingredient: String, allergen: String, way: String): String = {
+    var message = "I'm a placheolder hoping to never pop up."
+    if (this.ingredients.contains(ingredient)) { 
+      var changingAmount = amount
+      val dlkg = {
+        if (amount.contains(' ')) amount.split(' ')(1)
+        else ""
+      }
+      val compare = {
+        if (ingredients(ingredient).contains(' ')) ingredients(ingredient).split(' ')(1)
+        else ""
+      }
+      if (dlkg != compare) message = "Oops, you're meant to measure " + ingredient + " in " + compare.toString
+      else if (convertables.contains(ingredient)) {
+        changingAmount = converter(amount, ingredient)(0) + " " + converter(amount, ingredient)(1)
+        val newNro = converter(amount, ingredient)(0)
+        val newDlkg = converter(amount, ingredient)(1)
+      }
+      if (way == "add") { // A known ingredient is being added to
+        message = changeHelper(changingAmount, ingredient, "add")
+      }
+    } else { // If the ingredient is not in the already-known ingredients, it must be a new one that will be added
+      if (way == "reduce") "You can't reduce the amount of an ingredient that isn't in the pantry!"
+      else {
+        var input = amount + " § " + ingredient
+        if (allergen != "") input += allergen
+        input += " ¤ "
+        Reader.ingredientAdder(input)
+        message = "Ingredient added!"
+      }
     }
+    message
+  }
+  
+  def changeHelper(amount: String, name: String, way: String): String = {
+    var message = ""
+    val amnt = {
+      if (amount.contains(' ')) amount.split(' ')(0)
+      else amount
+    }
+    val dlkg = {
+      if (amount.contains(' ')) " " + amount.split(' ')(1)
+      else ""
+    }
+    val compare = {
+      if (ingredients(name).contains(' ')) ingredients(name).split(' ')(0)
+      else ingredients(name)
+    }
+    if (way == "add") {
+      val newAmount = compare.toInt + amnt.toInt
+      println("compare: " + compare + " amnt: " + amnt)
+      ingredients.update(name, newAmount.toString + dlkg)
+      message = "Amount of " + name + " updated!"
+    } else {
+      if (compare >= amnt) { // If the amount in pantry is greater than that to be reduced, do the reduction
+        val newAmount = compare.toInt - amnt.toInt
+        ingredients.update(name, newAmount.toString + dlkg)
+        message = "Amount of " + name + " updated!"
+      } else message = "Cannot reduce! You only have " + ingredients(name) + " in your pantry."
+    }
+    println("updating file")
+    Reader.updateFile
+    message
   }
 
   def pantryInfo: String = {
