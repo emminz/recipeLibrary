@@ -85,7 +85,11 @@ object Pantry {
     }
     else {
       for (osa <- ingredients) {
-        jatko = jatko + osa._2 + " of " + osa._1 + "\n"
+        val compare = {
+          if (osa._2.contains(' ')) osa._2.split(' ')(0)
+          else osa._2
+        }
+        if (compare.toDouble != 0.0) jatko = jatko + osa._2 + " of " + osa._1 + "\n"
       }
     }
     return alku + jatko.toString
