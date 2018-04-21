@@ -30,11 +30,15 @@ object Reader {
     } 
   } 
   
-  def ingredientAdder(input: String) = {
-    val split = input.trim.dropRight(1)split('¤')
+  def ingredientAdder(input: String, source: String) = {
+    val split = input.trim.dropRight(1).split('¤')
     for (osa <- split) {
       val individuals = osa.split('§')
-      var amount = "0"
+      var amount = {
+        if (source == "recipe") "0"
+        else if (individuals(0).trim.contains(' ')) individuals(0).trim.split(' ')(0)
+        else individuals(0).trim.toString
+      }
       if (individuals(0).trim.contains(' ')) {
         amount += " " + individuals(0).trim.split(' ')(1)
       }
@@ -47,9 +51,12 @@ object Reader {
         updatePantry
         if (!Pantry.ingredients.contains(name)) {
           val pw = new FileWriter(new File(pantryFile), true)
-          val stuff = Pantry.converter(amount, name)
-          amount = stuff(0) + " " + stuff(1) 
-          pw.write("\n" + "# " + name + " - " + amount)
+          if (source == "shop") {
+            val conversion = Pantry.converter(amount, name)
+            amount = conversion(0) + " " + conversion(1)
+          }
+          Pantry.ingredients.update(name, amount)
+          pw.write("\n" + "# " + name + " ¤ " + amount)
           if (allergen != "") pw.write(" &" + allergen)
           else pw.write(" &§")
           pw.flush()
@@ -69,7 +76,7 @@ object Reader {
       val file = Source.fromFile(pantryFile)
       for (line <- file.getLines) {
         if (line.head == '#') {
-          val parts = line.split('-')
+          val parts = line.split('¤')
           val name = parts(0).drop(1).trim
           val amount = parts(1).split('&')(0).trim
           allergen = parts(1).split('&')(1).trim
@@ -106,8 +113,8 @@ object Reader {
         amount = ingredient._2
         if (Pantry.allergens.contains(name)) allergen = Pantry.allergens(name)
         else allergen = "§"
-        println("# " + name + " - " + amount + " &" + allergen)
-        rw.write("\n# " + name + " - " + amount + " &" + allergen)
+        println("# " + name + " ¤ " + amount + " &" + allergen)
+        rw.write("\n# " + name + " ¤ " + amount + " &" + allergen)
       }
       rw.flush()
       rw.close()

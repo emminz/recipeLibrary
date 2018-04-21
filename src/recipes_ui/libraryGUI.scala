@@ -111,7 +111,9 @@ object libraryGUI extends SimpleSwingApplication {
       editable = false
       lineWrap = true
       wordWrap = true
-      text = "Here you can add ingredients or update an existing amount after shopping or reduce the amount as ingredients need to go.\n\nDon't worry, we all let things spoil sometimes."
+      text = "Here you can add ingredients or update an existing amount after shopping or throwing away the ingredient.\n" +
+             "Allergen only needs to be filled when adding a previously unknown ingredient which contains said allergen.\n\n" +
+             "For example:\nAmount: 1 dl of banana Contains allergen: banana"
       }
     val toShopButton = new Button("Add or remove ingredients")
     
@@ -481,10 +483,9 @@ object libraryGUI extends SimpleSwingApplication {
             else false
           }
           if (Reader.checkSmartInput(shoppingAmount.text) && Reader.checkSmartInput(shoppingName.text) && notMissing) {
-            Pantry.changeAmount(shoppingAmount.text.trim.toLowerCase, shoppingName.text.trim.toLowerCase, "", "reduce")
+            this.shopText.text = Pantry.changeAmount(shoppingAmount.text.trim.toLowerCase, shoppingName.text.trim.toLowerCase, "", "reduce")
           } else emptySpace.text = "Let's not use any special characters."
         } else if (buttonEvent.source == this.addRecBtn) {
-          println("Adding recipe")
           if (recName.text != "" && recMeth.text != "") {
             if (ingName.text == "" || ingAmnt.text == "") emptySpace.text = "Let's fill the ingredients.\nFrom the top, please."
             else {
@@ -528,7 +529,7 @@ object libraryGUI extends SimpleSwingApplication {
                 }
                 if (!missingFound && !problemFound) {
                   Reader.recipeAdder(recName.text.trim + "#" + recMeth.text.trim + "#" + ingredientString) //No problems, so all info sent to be added to the recipe library
-                  Reader.ingredientAdder(pantryString) //We can also add all the ingredient to the pantry since the recipe is acceptable
+                  Reader.ingredientAdder(pantryString, "recipe") //We can also add all the ingredient to the pantry since the recipe is acceptable
                 }
                 else emptySpace.text = "Some ingredient info is missing! Please fix."
               } else emptySpace.text = "Let's not us nany special characters."
