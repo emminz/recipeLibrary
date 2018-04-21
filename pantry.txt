@@ -1,8 +1,8 @@
 Known ingredients:
 & marks allergen
 # lemon juice ¤ 1.0 box &citrus
-# sugar ¤ 276.47058823529414 dl &§
 # brown sugar ¤ 0 dl &§
+# sugar ¤ 300 dl &§
 # flour ¤ 600 dl &gluten
 # water ¤ 999 dl &§
 # milk ¤ 10 dl &milk
