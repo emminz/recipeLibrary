@@ -7,22 +7,22 @@ import java.io.PrintWriter
 import java.io._
 
 object Reader {
-  val recipeFile = "recipe_library.txt"
-  val pantryFile = "pantry.txt"
-  
-  val ingAsRecMap = collection.mutable.Map[String, Array[String]]()
+  private val recipeFile = "recipe_library.txt"
+  private val pantryFile = "pantry.txt"
   
   def recipeAdder(input: String) = {
     val split = input.split('#')
     val name = split(0)
-    val method = split(1)
+    var method = split(1)
     val ingString = split(2)
     try {
       val rw = new FileWriter(new File(recipeFile), true)
-      rw.write('\n' + "-----" + '\n' + '#' + name + '\n')
+      rw.write('\n' + '\n' + '#' + name + '\n')
       Search.knownRecipes += (name.toLowerCase -> Array(method, ingString))
+      if (method.contains('\n')) method = method.replace('\n', ' ')
       rw.write('[' + method + '\n')
       rw.write('%' + ingString)
+      rw.write('\n' + "-----")
       rw.flush()
       rw.close()
     } catch {
@@ -92,6 +92,7 @@ object Reader {
     }
   }
   
+  // The method below updates the pantry.txt file to mirror the changes in Pantry.ingredients, thus saving the changes more permanently
   def updateFile = {
     try {
       var name = ""
@@ -116,6 +117,7 @@ object Reader {
     }
   }
   
+  // checkAmount checks whether there is enough of an ingredient in the pantry. Returns true if enough, false if not enough.
   def checkAmount(amount: String, name: String): Boolean = {
     val nimi = name.toLowerCase.trim
     Reader.updatePantry
@@ -129,8 +131,6 @@ object Reader {
       if (Pantry.ingredients(nimi).trim.contains(' ')) {
         compare = Pantry.ingredients(nimi).split(' ')(0).trim.toDouble
       } else compare = Pantry.ingredients(nimi).trim.toDouble
-      println("amnout: " + amnt)
-      println("compare: " + compare)
       amnt <= compare
     } else false
   }
@@ -138,10 +138,9 @@ object Reader {
   def getSubIngredients(subIng: String): (String, String) = {
     val palat = subIng.trim.split('§')
     val ingName = palat(1).trim.toLowerCase
-    
     var neededIngs = ""
     var neededMethods = ""
-    if (Search.knownRecipes.contains(ingName.toLowerCase) && !Pantry.ingredients.contains(ingName.toLowerCase)) {
+    if (Search.knownRecipes.contains(ingName.toLowerCase) && !checkAmount(palat(0), ingName)) {
       val otherIngredients = Search.knownRecipes(ingName.toLowerCase)(1)
       val stuff = getSubIngredients(otherIngredients)
       neededIngs += stuff._1
@@ -165,33 +164,26 @@ object Reader {
       for (line <- file.getLines) {
         if (line.head == '#') {
           name = line.drop(1).trim
-          Search.knownRecipes += (name.toLowerCase -> Array(method, ingredients))
-          missing = 0 // Let's reset missing to start at 0 for each recipe
+//          missing = 0 // Let's reset missing to start at 0 for each recipe
         }
         else if (line.head == '[') method = line.drop(1).trim
         else if (line.head == '%') {
-          // ingredients = line.drop(1).trim
-          val ing = line.drop(1).trim.split('¤').toBuffer
+          var ing = line.drop(1).trim.split('¤').toBuffer
           for (osa <- ing) {
             val stuff = getSubIngredients(osa)
             ingredients += stuff._1
             method += stuff._2
-//            val palat = osa.trim.split('§')
-//            val ingName = palat(1).trim.toLowerCase
-//            if (Search.knownRecipes.contains(ingName.toLowerCase) && !Pantry.ingredients.contains(ingName.toLowerCase)) {
-//              val otherIngredients = Search.knownRecipes(ingName.toLowerCase)(1)
-//              ingredients += otherIngredients
-////              ing += Search.knownRecipes(ingName.toLowerCase)(1)
-//              method += Search.knownRecipes(ingName.toLowerCase)(0)
-//            } else {
-//              ingredients += osa + " ¤ "
-//            }
           }
+          ingredients = ingredients.replaceAll("¤  ¤", "¤")
+          ing = ingredients.trim.split('¤').toBuffer
           if (like != "") { // If like is defined, then the recipe is added only if it is looked for. If like is not filled, all recipes will do
             if (ingredients.contains(like)) {
+              println("This recipe has the searched ingredient")
               for (osa <- ing) {
                 val palat = osa.trim.split('§')
-                if (!checkAmount(palat(0).trim, palat(1).trim)) missing += 1
+                if (palat.length == 2) {
+                  if (!checkAmount(palat(0).trim, palat(1).trim)) missing += 1
+                }
               }
               if (Search.N >= missing) suitables += (name -> Array(method, ingredients))
             }
@@ -202,8 +194,14 @@ object Reader {
             }
             if (Search.N >= missing) suitables += (name -> Array(method, ingredients))
           }
-        } // Now all the suitable recipes are in a Map ready to be dropped in the next stage
-      } 
+        } else if (line.head == '-') {
+          Search.knownRecipes += (name.toString.toLowerCase -> Array(method.toString, ingredients.toString))
+          missing = 0
+          method = ""
+          name = ""
+          ingredients = ""
+        }
+      } // Now all the suitable recipes are in a Map ready to be dropped in the next stage
       if (avoid != "") { // If the ingredients contain an ingredient or allergen that should be avoided, the recipe will be dropped
         for (osa <- suitables) {
           for (pala <- osa._2) {

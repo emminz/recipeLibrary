@@ -28,6 +28,7 @@ object Search {
     }
     val suitables = Reader.readRecipes(like, avoid)
     if (suitables.nonEmpty) {
+      println(suitables)
       val chosen = pickOne(suitables)
       giveRecipe(chosen)
     } else {
@@ -70,7 +71,11 @@ object Search {
   def pickOne(suitables: collection.mutable.Map[String, Array[String]]): collection.mutable.Map[String, Array[String]] = {
     val keys = suitables.keySet
     val r = scala.util.Random
-    val chosenName = keys.toBuffer(r.nextInt(keys.size - 1 ))
+    val chosenName = if (keys.size == 1) {
+      keys.head
+    } else {
+      keys.toBuffer(r.nextInt(keys.size - 1 ))
+    }
     collection.mutable.Map(chosenName -> suitables(chosenName))
   }
   
