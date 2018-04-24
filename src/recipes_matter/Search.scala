@@ -3,9 +3,8 @@ package recipes_matter
 import recipes_ui._
 
 object Search {
-  
+  val knownRecipes  = collection.mutable.Map[String, Array[String]]()
   var N = 0
-  
   val ingredientMap = collection.mutable.Map[String, String]()
 
   // When input comes in, we need to know whether it's a like or a dislike
@@ -70,7 +69,8 @@ object Search {
   
   def pickOne(suitables: collection.mutable.Map[String, Array[String]]): collection.mutable.Map[String, Array[String]] = {
     val keys = suitables.keySet
-    val chosenName = keys.head
+    val r = scala.util.Random
+    val chosenName = keys.toBuffer(r.nextInt(keys.size - 1 ))
     collection.mutable.Map(chosenName -> suitables(chosenName))
   }
   
