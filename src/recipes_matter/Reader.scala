@@ -97,7 +97,6 @@ object Reader {
       var name = ""
       var amount = ""
       var allergen = ""
-//      val oldFile = new File("pantry.txt")
       val rw = new FileWriter(new File(pantryFile), false)
       rw.write("Known ingredients:\n& marks allergen")
       for (ingredient <- Pantry.ingredients) {
@@ -111,7 +110,6 @@ object Reader {
       rw.flush()
       rw.close()
       println("renaming")
-      //newFile.renameTo(oldFile)
     } catch {
       case e: FileNotFoundException => println("Pantry file is missing.")
       case e: IOException => println("Got an IOException!")

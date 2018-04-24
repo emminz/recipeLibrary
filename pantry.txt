@@ -1,15 +1,22 @@
 Known ingredients:
 & marks allergen
+# vanilla extract ¤ 0 tbsp &§
 # lemon juice ¤ 1.0 box &citrus
-# brown sugar ¤ 0.0 dl &§
+# light soft brown sugar ¤ 0 g &§
 # sugar ¤ 278.0 dl &§
+# chopped tomatoes ¤ 600.0 g &§
+# brown sugar ¤ 0.0 dl &§
+# baking powder ¤ 0 tsp &§
+# egg ¤ 0 &egg
+# butter ¤ 0 g &milk
 # flour ¤ 600.0 dl &gluten
-# water ¤ 839.0 dl &§
+# chorizo ¤ 0.0 g &§
+# milk chocolate ¤ 0 g &milk
+# water ¤ 703.0 dl &§
 # milk ¤ 10.0 dl &milk
+# pesto ¤ 2.0 tub &§
 # yeast ¤ 0.0 tsp &§
 # cinnamon ¤ 0.25 tsp &§
-# lemon ¤ 2.0 &citrus
-# chorizo ¤ 0.0 g &§
-# chopped tomatoes ¤ 600.0 g &§
+# lemon ¤ 0.0 &citrus
 # butter beans ¤ 0.0 g &§
-# pesto ¤ 2.0 tub &§
+# granulated sugar ¤ 0 g &§

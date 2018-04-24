@@ -33,6 +33,8 @@ object libraryGUI extends SimpleSwingApplication {
       editable = true
     }
     
+    val recBoxScroll = new ScrollPane(recipeBox)
+    
     // Empty-looking space to help align the buttons nicely
     val emptySpace = new TextArea(5, 33) {
       editable = false
@@ -101,7 +103,13 @@ object libraryGUI extends SimpleSwingApplication {
     val aller14 = new TextField(30)  { name = "aller" }
     val aller15 = new TextField(30)  { name = "aller" }
     
-    val recMeth = new TextArea(5, 30)
+    val recMeth = new TextArea(5, 30) {
+      editable = true
+      lineWrap = true
+      wordWrap = true
+    }
+    
+    val recScroll = new ScrollPane(recMeth)
     
     val shoppingAmount = new TextField(1)
     val shoppingName = new TextField(1)
@@ -365,7 +373,7 @@ object libraryGUI extends SimpleSwingApplication {
     var addRecView = new BoxPanel(Orientation.Vertical) {
       contents += recName
       contents += Swing.VStrut(10)
-      contents += recMeth
+      contents += recScroll
       contents += Swing.VStrut(10)
       contents += ingredientRow
       contents += Swing.VStrut(1)
