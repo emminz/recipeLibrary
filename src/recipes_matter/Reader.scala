@@ -31,6 +31,8 @@ object Reader {
     } 
   } 
   
+  // input String looks like "100 g § ingredient ¤", and source is "shop" or "recipe",
+  // depending on where the new ingredient was entered from.
   def ingredientAdder(input: String, source: String) = {
     val split = input.trim.dropRight(1).split('¤')
     for (osa <- split) {

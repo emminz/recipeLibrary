@@ -7,5 +7,7 @@
 	<classpathentry exported="true" kind="lib" path="lib/scalatest_2.11-2.2.6.jar"/>
 	<classpathentry kind="lib" path="lib/scalax_2.11-1.26.0.jar"/>
 	<classpathentry kind="lib" path="lib/scalactic_2.11-2.2.6.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="/TestingLibraries/scala-xml_2.12-1.0.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
