@@ -36,7 +36,8 @@ object Reader {
     for (osa <- split) {
       val individuals = osa.split('§')
       var amount = {
-        if (source == "recipe") "0"
+      // If the new ingredient was added through a recipe, it wasn't bought and therefore the amount is 0
+        if (source == "recipe") "0" 
         else if (individuals(0).trim.contains(' ')) individuals(0).trim.split(' ')(0)
         else individuals(0).trim.toString
       }

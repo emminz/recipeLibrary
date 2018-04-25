@@ -448,24 +448,24 @@ object libraryGUI extends SimpleSwingApplication {
     
     this.reactions += {
       case keyEvent: KeyPressed =>
-        if (keyEvent.source == this.searchBar && keyEvent.key == Key.Enter) {
+        if (keyEvent.source == this.searchBar && keyEvent.key == Key.Enter) { //Searching
           val command = this.searchBar.text.trim
           if (command.nonEmpty) {
             if (!Reader.checkSmartInput(command)) emptySpace.text = "Please don't search with special characters."
             else if (!Search.checkInput(command)) emptySpace.text = "You can use one good and one bad word in the search.\nNo more than that, please."
             else {
               val tryThis = Search.dealWithInput(command)
-              if (tryThis == "fail") {
+              if (tryThis == "fail") { //No suitable recipe found
                 updateUI("showComplaint")
                 recipeBox.text = "There are no recipes matching your search.\nFeel free to try again."
               }
-              else {
+              else { // Recipe found, display it
                 updateUI("showRecipe")
                 recipeBox.text = tryThis
               }
             }
           }
-        } else if (keyEvent.source == this.NField) {
+        } else if (keyEvent.source == this.NField) { //Setting allow missing
           try {
             val nro = NField.text.toInt
             if (nro >= 0) {
@@ -477,16 +477,16 @@ object libraryGUI extends SimpleSwingApplication {
             case e: Exception => emptySpace.text = "Please use numbers for allowance of missing ingredients."
           }
         }
-      case buttonEvent: ButtonClicked =>
+      case buttonEvent: ButtonClicked => //Going to pantry
         if (buttonEvent.source == this.pantryButton) {
           updateUI("pantry")
-        } else if (buttonEvent.source == this.addRecipeButton) {
+        } else if (buttonEvent.source == this.addRecipeButton) { //Going to recipe adder
           updateUI("addingRecipe")
           emptySpace.text = "Here you can add a recipe.\nFirst give the name and method, then the ingredients in format "+
                             "100 g (of) spring onion (contains allergen:) onion"
-        } else if (buttonEvent.source == this.useRecBtn) { 
+        } else if (buttonEvent.source == this.useRecBtn) {  //Making displayed recipe
           emptySpace.text = Pantry.useRecipe(Search.ingredientMap)
-        } else if (buttonEvent.source == this.randomer) {
+        } else if (buttonEvent.source == this.randomer) { //Random recipe
           val random = Search.dealWithInput("")
           if (random == "fail") {
             updateUI("showComplaint")
@@ -496,9 +496,9 @@ object libraryGUI extends SimpleSwingApplication {
             updateUI("showRecipe")
             recipeBox.text = random
           }
-        } else if (buttonEvent.source == this.toShopButton) {
+        } else if (buttonEvent.source == this.toShopButton) { //Going to ingredient changer
           updateUI("shopping")
-        } else if (buttonEvent.source == this.shoppingAdd) {
+        } else if (buttonEvent.source == this.shoppingAdd) { //Adding ingredient
           val notMissing: Boolean = {
             if (shoppingName.text != "") shoppingAmount.text != ""
             else if (shoppingAmount.text != "") shoppingName.text != ""
@@ -507,7 +507,7 @@ object libraryGUI extends SimpleSwingApplication {
           if (Reader.checkSmartInput(shoppingAmount.text) && Reader.checkSmartInput(shoppingName.text) && Reader.checkSmartInput(shoppingAller.text) && notMissing) {
             this.shopText.text = Pantry.changeAmount(shoppingAmount.text.trim.toLowerCase, shoppingName.text.trim.toLowerCase, shoppingAller.text.trim.toLowerCase, "add")
           } else emptySpace.text = "Let's not use any special characters."
-        } else if (buttonEvent.source == this.shoppingRemove) {
+        } else if (buttonEvent.source == this.shoppingRemove) { //Reducing ingredient amount
           val notMissing: Boolean = {
             if (shoppingName.text != "") shoppingAmount.text != ""
             else if (shoppingAmount.text != "") shoppingName.text != ""
@@ -516,7 +516,7 @@ object libraryGUI extends SimpleSwingApplication {
           if (Reader.checkSmartInput(shoppingAmount.text) && Reader.checkSmartInput(shoppingName.text) && notMissing) {
             this.shopText.text = Pantry.changeAmount(shoppingAmount.text.trim.toLowerCase, shoppingName.text.trim.toLowerCase, "", "reduce")
           } else emptySpace.text = "Let's not use any special characters."
-        } else if (buttonEvent.source == this.addRecBtn) {
+        } else if (buttonEvent.source == this.addRecBtn) { //Saving recipe
           if (recName.text != "" && recMeth.text != "") {
             if (ingName.text == "" || ingAmnt.text == "") emptySpace.text = "Let's fill the ingredients.\nFrom the top, please."
             else {

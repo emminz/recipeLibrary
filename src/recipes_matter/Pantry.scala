@@ -73,6 +73,7 @@ object Pantry {
     message
   }
 
+  //The method below lists all ingredients in pantry if the amount is greater than 0
   def pantryInfo: String = {
     Reader.updatePantry
     val alku = "You have in your pantry:\n\n"
