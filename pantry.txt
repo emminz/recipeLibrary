@@ -1,9 +1,29 @@
 Known ingredients:
-& marks allergen
-# water - 999 dl &§
-# milk - 10 dl &milk
-# flour - 2000 g &gluten
-# lemon - 3 &citrus
-# sugar - 1000 g &§
-# yeast - 50 g &§
-# brown sugar - 0 g &§
+&marks allergen
+# banana ¤ 0 &§
+# vanilla extract ¤ 8.0 tbsp &§
+# frozen peas ¤ 0 tbsp &§
+# spring onion ¤ 0 &onion
+# chopped tomatoes ¤ 600.0 g &§
+# light soft brown sugar ¤ 620.0 g &§
+# sugar ¤ 278.0 dl &§
+# brown sugar ¤ 900.0 dl &§
+# chocolate chip cookies ¤ 0 pack &§
+# courgette ¤ 0 &§
+# egg ¤ 6.0 &egg
+# flour ¤ 893.0769230769231 dl &gluten
+# butter ¤ 650.0 g &milk
+# baking powder ¤ 10 tsp &§
+# chorizo ¤ 0.0 g &§
+# vanilla icecream ¤ 1 pack &§
+# feta cheese ¤ 0 g &§
+# water ¤ 703.0 dl &§
+# milk chocolate ¤ 600.0 g &milk
+# milk ¤ 10.0 dl &milk
+# pesto ¤ 2.0 tub &§
+# ham ¤ 0 &§
+# yeast ¤ 0.0 tsp &§
+# cinnamon ¤ 0.25 tsp &§
+# lemon ¤ 0.0 &citrus
+# butter beans ¤ 0.0 g &§
+# granulated sugar ¤ 675.0 g &§
