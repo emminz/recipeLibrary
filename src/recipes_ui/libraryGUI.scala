@@ -127,7 +127,7 @@ object libraryGUI extends SimpleSwingApplication {
              "Allergen only needs to be filled when adding a previously unknown ingredient which contains said allergen.\n\n" +
              "For example:\nAmount: 1 dl of banana Contains allergen: banana"
       }
-    private val toShopButton = new Button("Add or remove ingredients")
+    private val toShopButton = new Button("Add or reduce ingredients")
     
     private val shopButtonRow = new BoxPanel(Orientation.Horizontal) {
       contents += Swing.HStrut(60)

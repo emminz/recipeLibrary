@@ -193,7 +193,7 @@ object Reader {
             }
             if (Search.N >= missing) suitables += (name -> Array(method, ingredients))
           }
-        } else if (line.head == '-') {
+        } else if (line.head == '-') { //End of recipe, reset everything
           Search.knownRecipes += (name.toString.toLowerCase -> Array(method.toString, ingredients.toString))
           missing = 0
           method = ""
