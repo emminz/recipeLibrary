@@ -4,7 +4,7 @@ import recipes_ui._
 
 object Search {
   val knownRecipes  = collection.mutable.Map[String, Array[String]]()
-  var N = 0
+  var N = 0 // This is the allow missing counter, defaulting to 0
   val ingredientMap = collection.mutable.Map[String, String]()
 
   // When input comes in, we need to know whether it's a like or a dislike
@@ -28,7 +28,6 @@ object Search {
     }
     val suitables = Reader.readRecipes(like, avoid)
     if (suitables.nonEmpty) {
-      println(suitables)
       val chosen = pickOne(suitables)
       giveRecipe(chosen)
     } else {
@@ -36,10 +35,11 @@ object Search {
     }
   }
   
+  // Prepares the recipe into a string for the UI recipeBox element to display
   def giveRecipe(chosen: collection.mutable.Map[String, Array[String]]): String = {
     var ingredientString = ""
     val name = chosen.keys.head.toString
-    val method = chosen(name)(0)
+    val method = chosen(name)(0).replace('¤', '\n')
     val ingredients = chosen(name)(1).trim
     val individuals = ingredients.trim.split('¤')
     for (osa <- individuals) {
@@ -68,6 +68,7 @@ object Search {
     name + "\n\n" + method + "\n\n" + ingredientString
   }
   
+  // Chooses a recipe randomly if there are multiple options. Otherwise hands out the only option
   def pickOne(suitables: collection.mutable.Map[String, Array[String]]): collection.mutable.Map[String, Array[String]] = {
     val keys = suitables.keySet
     val r = scala.util.Random

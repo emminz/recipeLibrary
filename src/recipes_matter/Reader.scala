@@ -17,9 +17,9 @@ object Reader {
     val ingString = split(2)
     try {
       val rw = new FileWriter(new File(recipeFile), true)
-      rw.write('\n' + '\n' + '#' + name + '\n')
+      rw.write("\n#" + name + "\n")
       Search.knownRecipes += (name.toLowerCase -> Array(method, ingString))
-      if (method.contains('\n')) method = method.replace('\n', ' ')
+      if (method.contains('\n')) method = method.replace('\n', '¤')
       rw.write('[' + method + '\n')
       rw.write('%' + ingString)
       rw.write('\n' + "-----")
@@ -110,7 +110,6 @@ object Reader {
       }
       rw.flush()
       rw.close()
-      println("renaming")
     } catch {
       case e: FileNotFoundException => println("Pantry file is missing.")
       case e: IOException => println("Got an IOException!")
@@ -123,7 +122,6 @@ object Reader {
     Reader.updatePantry
     var amnt = 0.0
     var compare = 0.0
-    println(Pantry.ingredients.toString)
     if (Pantry.ingredients.contains(nimi)) {
       if (amount.trim.contains(' ')) {
         amnt = amount.split(' ')(0).trim.toDouble
@@ -142,9 +140,9 @@ object Reader {
     var neededMethods = ""
     if (Search.knownRecipes.contains(ingName.toLowerCase) && !checkAmount(palat(0), ingName)) {
       val otherIngredients = Search.knownRecipes(ingName.toLowerCase)(1)
-      val stuff = getSubIngredients(otherIngredients)
-      neededIngs += stuff._1
-      neededMethods += Search.knownRecipes(ingName.toLowerCase)(0) + stuff._2
+      val subbies = getSubIngredients(otherIngredients)
+      neededIngs += subbies._1
+      neededMethods += Search.knownRecipes(ingName.toLowerCase)(0) + subbies._2
     } else {
       neededIngs += subIng + " ¤ "
     }
@@ -164,7 +162,6 @@ object Reader {
       for (line <- file.getLines) {
         if (line.head == '#') {
           name = line.drop(1).trim
-//          missing = 0 // Let's reset missing to start at 0 for each recipe
         }
         else if (line.head == '[') method = line.drop(1).trim
         else if (line.head == '%') {
@@ -234,5 +231,20 @@ object Reader {
     !input.contains('#') && !input.contains('[') && !input.contains(']') && 
     !input.contains('%') && !input.contains('§') && !input.contains('¤') && 
     !input.contains('^') && !input.contains('¨')
+  }
+  
+  def checkNumberInput(input: String) = {
+    var works = false
+    var nro = 0
+    try {
+      if (input.contains(' ')) {
+        nro = input.split(' ')(0).trim.toInt
+      } else nro = input.trim.toInt
+      println(nro)
+      if (nro > 0 && nro < 9999999) works = true
+    } catch {
+      case e: Exception => works = false
+    }
+    works
   }
 }

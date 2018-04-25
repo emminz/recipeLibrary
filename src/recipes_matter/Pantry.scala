@@ -4,14 +4,12 @@ import scala.collection.mutable.Map
 
 object Pantry {
   
-  var ingredients = collection.mutable.Map[String, String]()
-  var allergens = collection.mutable.Map[String, String]()
-  val convertables = collection.mutable.Map[String, String](("sugar", "85"), ("flour", "65"), ("olive oil", "90"))
+  val ingredients = collection.mutable.Map[String, String]()
+  val allergens = collection.mutable.Map[String, String]()
+  private val convertables = collection.mutable.Map[String, String](("sugar", "85"), ("flour", "65"), ("olive oil", "90"))
   
   def changeAmount(amount: String, ingredient: String, allergen: String, way: String): String = {
     var message = "I'm a placheolder hoping to never pop up."
-    println("Changing!")
-    println(way)
     if (this.ingredients.contains(ingredient)) {
       var changingAmount = amount
       val dlkg = {
@@ -21,12 +19,14 @@ object Pantry {
       val compare = {
         if (ingredients(ingredient).contains(' ')) ingredients(ingredient).split(' ')(1)
         else ""
+      } // The user cannot at first measure rye bread in pieces and then decide to switch to grams
+      if (dlkg != compare && !convertables.contains(ingredient)) {
+        var endbit = "units"
+        if (compare.toString != "") endbit = compare.toString
+        message = "Oops, you're meant to measure " + ingredient + " in " + endbit
       }
-      if (dlkg != compare && !convertables.contains(ingredient)) message = "Oops, you're meant to measure " + ingredient + " in " + compare.toString
       else if (convertables.contains(ingredient)) {
         changingAmount = converter(amount, ingredient)(0) + " " + converter(amount, ingredient)(1)
-//        val newNro = converter(amount, ingredient)(0)
-//        val newDlkg = converter(amount, ingredient)(1)
         message = changeHelper(changingAmount, ingredient, way)
       } else {
           message = changeHelper(changingAmount, ingredient, way)
@@ -58,9 +58,8 @@ object Pantry {
       if (ingredients(name).trim.contains(' ')) ingredients(name).trim.split(' ')(0)
       else ingredients(name).trim
     }
-    if (way == "add") {
+    if (way == "add") { // If we are adding to an ingredient, it's fairly simple
       val newAmount = compare.toDouble + amnt.toDouble
-      println("compare: " + compare + " amnt: " + amnt)
       ingredients.update(name, newAmount.toString + dlkg)
       message = "Amount of " + name + " updated!"
     } else {
@@ -70,8 +69,7 @@ object Pantry {
         message = "Amount of " + name + " updated!"
       } else message = "Cannot reduce! You only have " + ingredients(name) + " in your pantry."
     }
-    println("updating file")
-    Reader.updateFile
+    Reader.updateFile // The changes have so far only been made to Pantry.ingredients. Now let's save them to pantry.txt
     message
   }
 
