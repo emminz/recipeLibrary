@@ -14,12 +14,12 @@ object Search {
     var like = ""
     if (input.contains(',')) {
       val split = input.trim.split(',')
-      if (split(0).head == '!') {
-        avoid = split(0).drop(1).trim.toLowerCase
+      if (split(0).trim.head == '!') {
+        avoid = split(0).trim.drop(1).trim.toLowerCase
         like = split(1).trim.toLowerCase
       }
-      else if (split(1).head == '!') {
-        avoid = split(1).drop(1).trim.toLowerCase
+      else if (split(1).trim.head == '!') {
+        avoid = split(1).trim.drop(1).trim.toLowerCase
         like = split(0).trim.toLowerCase
       }
     } else if (input != "") {
@@ -82,16 +82,16 @@ object Search {
   
   // Checks if there's only one like and one dislike, returns true
   def checkInput(input: String) = {
-    var tooMany = false
+    var noProblem = true
     if (input.contains(',')) {
       val split = input.split(',')
-      if (split.length > 2) tooMany = true
+      if (split.length > 2) noProblem = false
       else {
-        if (split(0).head == '!' && split(1).head == '!') tooMany = true
-        else if (split(0).head != '!' && split(1).head != '!') tooMany = true
+        if (split(0).trim.head == '!' && split(1).trim.head == '!') noProblem = false
+        else if (split(0).trim.head != '!' && split(1).trim.head != '!') noProblem = false
       }
-    }
-    !tooMany
+    } 
+    noProblem
   }
   
 }

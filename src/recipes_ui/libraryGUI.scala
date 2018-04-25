@@ -452,7 +452,7 @@ object libraryGUI extends SimpleSwingApplication {
           val command = this.searchBar.text.trim
           if (command.nonEmpty) {
             if (!Reader.checkSmartInput(command)) emptySpace.text = "Please don't search with special characters."
-            else if (Search.checkInput(command)) emptySpace.text = "You can use one good and one bad word in the search.\nNo more than that, please."
+            else if (!Search.checkInput(command)) emptySpace.text = "You can use one good and one bad word in the search.\nNo more than that, please."
             else {
               val tryThis = Search.dealWithInput(command)
               if (tryThis == "fail") { //No suitable recipe found

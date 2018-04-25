@@ -158,7 +158,7 @@ object Reader {
     var missing = 0
     try {
       val file = Source.fromFile(recipeFile)
-      var suitables = collection.mutable.Map[String, Array[String]]()
+      val suitables = collection.mutable.Map[String, Array[String]]()
       var name = ""
       var method = ""
       var ingredients = ""

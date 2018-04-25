@@ -6,7 +6,7 @@ object Pantry {
   
   val ingredients = collection.mutable.Map[String, String]()
   val allergens = collection.mutable.Map[String, String]()
-  private val convertables = collection.mutable.Map[String, String](("sugar", "85"), ("flour", "65"), ("olive oil", "90"))
+  private val convertables = collection.immutable.Map[String, String](("sugar", "85"), ("flour", "65"), ("olive oil", "90"))
   
   def changeAmount(amount: String, ingredient: String, allergen: String, way: String): String = {
     var message = "I'm a placheolder hoping to never pop up."
