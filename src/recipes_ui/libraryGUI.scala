@@ -482,7 +482,7 @@ object libraryGUI extends SimpleSwingApplication {
           updateUI("pantry")
         } else if (buttonEvent.source == this.addRecipeButton) {
           updateUI("addingRecipe")
-          emptySpace.text = "Here you can add a recipe.\nFirst give the name and mathod, then the ingredients in format "+
+          emptySpace.text = "Here you can add a recipe.\nFirst give the name and method, then the ingredients in format "+
                             "100 g (of) spring onion (contains allergen:) onion"
         } else if (buttonEvent.source == this.useRecBtn) { 
           emptySpace.text = Pantry.useRecipe(Search.ingredientMap)
