@@ -1,3 +1,5 @@
+Known ingredients:
+&marks allergen
 # banana ¤ 0 &§
 # vanilla extract ¤ 8.0 tbsp &§
 # frozen peas ¤ 0 tbsp &§

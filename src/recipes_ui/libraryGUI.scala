@@ -483,7 +483,8 @@ object libraryGUI extends SimpleSwingApplication {
         } else if (buttonEvent.source == this.addRecipeButton) { //Going to recipe adder
           updateUI("addingRecipe")
           emptySpace.text = "Here you can add a recipe.\nFirst give the name and method, then the ingredients in format "+
-                            "100 g (of) spring onion (contains allergen:) onion"
+                            "100 g (of) spring onion (contains allergen:) onion\n" + 
+                             "You can also leave the allergen blank."
         } else if (buttonEvent.source == this.useRecBtn) {  //Making displayed recipe
           emptySpace.text = Pantry.useRecipe(Search.ingredientMap)
         } else if (buttonEvent.source == this.randomer) { //Random recipe

@@ -145,7 +145,7 @@ object Reader {
       val otherIngredients = Search.knownRecipes(ingName.toLowerCase)(1)
       val subbies = getSubIngredients(otherIngredients)
       neededIngs += subbies._1
-      neededMethods += Search.knownRecipes(ingName.toLowerCase)(0) + subbies._2
+      neededMethods += "¤¤" + Search.knownRecipes(ingName.toLowerCase)(0) + subbies._2
     } else {
       neededIngs += subIng + " ¤ "
     }
