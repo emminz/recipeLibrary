@@ -134,6 +134,8 @@ object Reader {
     } else false
   }
   
+  // If an ingredient is also a recipe and is missing from the pantry, 
+  // add its own ingredients and method to the original
   def getSubIngredients(subIng: String): (String, String) = {
     val palat = subIng.trim.split('§')
     val ingName = palat(1).trim.toLowerCase
@@ -176,7 +178,6 @@ object Reader {
           ing = ingredients.trim.split('¤').toBuffer
           if (like != "") { // If like is defined, then the recipe is added only if it is looked for. If like is not filled, all recipes will do
             if (ingredients.contains(like)) {
-              println("This recipe has the searched ingredient")
               for (osa <- ing) {
                 val palat = osa.trim.split('§')
                 if (palat.length == 2) {
