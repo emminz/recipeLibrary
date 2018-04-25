@@ -18,7 +18,7 @@ object Reader {
     try {
       val rw = new FileWriter(new File(recipeFile), true)
       rw.write("\n#" + name + "\n")
-      Search.knownRecipes += (name.toLowerCase -> Array(method, ingString))
+      Search.knownRecipes += (name.trim.toLowerCase -> Array(method, ingString))
       if (method.contains('\n')) method = method.replace('\n', '¤')
       rw.write('[' + method + '\n')
       rw.write('%' + ingString)

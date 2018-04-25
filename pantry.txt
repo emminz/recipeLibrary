@@ -28,6 +28,6 @@ Known ingredients:
 # butter beans ¤ 0.0 g &§
 # granulated sugar ¤ 50.0 g &§
 # spring onions ¤ 0 &onion
-# caster sugar ¤ 0 g &§
-# sponge cake ¤ 0 &§
+# caster sugar ¤ 500 g &§
+# sponge cake ¤ 1 &§
 # icing sugar ¤ 0 g &§
