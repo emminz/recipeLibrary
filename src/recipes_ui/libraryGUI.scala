@@ -47,7 +47,7 @@ object libraryGUI extends SimpleSwingApplication {
     }
     
     private val NField = new TextField(1) {
-      text = "0"
+      text = "1"
       editable = true
     }
     
@@ -413,7 +413,7 @@ object libraryGUI extends SimpleSwingApplication {
   
     // Layout
     this.contents = new GridBagPanel {
-      layout += recBoxScroll                -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 10, 5, 10), 0, 0)
+      layout += recBoxScroll             -> new Constraints(0, 0, 1, 0, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 10, 5, 10), 0, 0)
       layout += pantryButton             -> new Constraints(1, 2, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
       layout += searchBar                -> new Constraints(1, 0, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
       layout += NRow                     -> new Constraints(1, 1, 1, 1, 0, 0, NorthWest.id, Fill.Both.id, new Insets(5, 0, 0, 10), 0, 0)
@@ -482,7 +482,7 @@ object libraryGUI extends SimpleSwingApplication {
           updateUI("pantry")
         } else if (buttonEvent.source == this.addRecipeButton) { //Going to recipe adder
           updateUI("addingRecipe")
-          emptySpace.text = "Here you can add a recipe.\nFirst give the name and method, then the ingredients in format "+
+          emptySpace.text = "Here you can add a recipe.\nFirst give the name and method, then the ingredients in format " +
                             "100 g (of) spring onion (contains allergen:) onion\n" + 
                              "You can also leave the allergen blank."
         } else if (buttonEvent.source == this.useRecBtn) {  //Making displayed recipe

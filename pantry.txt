@@ -24,6 +24,10 @@ Known ingredients:
 # ham ¤ 0 &§
 # yeast ¤ 0.0 tsp &§
 # cinnamon ¤ 0.25 tsp &§
-# lemon ¤ 0.0 &citrus
+# lemon ¤ 5.0 &citrus
 # butter beans ¤ 0.0 g &§
 # granulated sugar ¤ 50.0 g &§
+# spring onions ¤ 0 &onion
+# caster sugar ¤ 0 g &§
+# sponge cake ¤ 0 &§
+# icing sugar ¤ 0 g &§

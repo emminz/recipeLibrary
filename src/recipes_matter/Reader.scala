@@ -106,7 +106,6 @@ object Reader {
         amount = ingredient._2
         if (Pantry.allergens.contains(name)) allergen = Pantry.allergens(name)
         else allergen = "§"
-        println("# " + name + " ¤ " + amount + " &" + allergen)
         rw.write("\n# " + name + " ¤ " + amount + " &" + allergen)
       }
       rw.flush()
@@ -237,13 +236,12 @@ object Reader {
   
   def checkNumberInput(input: String) = {
     var works = false
-    var nro = 0
+    var nro = 0.0
     try {
       if (input.contains(' ')) {
-        nro = input.split(' ')(0).trim.toInt
-      } else nro = input.trim.toInt
-      println(nro)
-      if (nro > 0 && nro < 9999999) works = true
+        nro = input.split(' ')(0).trim.toDouble
+      } else nro = input.trim.toDouble
+      if (nro > 0.0 && nro < 9999999.9) works = true
     } catch {
       case e: Exception => works = false
     }

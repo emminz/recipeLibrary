@@ -4,7 +4,7 @@ import recipes_ui._
 
 object Search {
   val knownRecipes  = collection.mutable.Map[String, Array[String]]()
-  var N = 0 // This is the allow missing counter, defaulting to 0
+  var N = 1 // This is the allow missing counter, defaulting to 1
   val ingredientMap = collection.mutable.Map[String, String]()
 
   // When input comes in, we need to know whether it's a like or a dislike
